@@ -11,7 +11,7 @@ This script starts or stops the EO Catalogue server and the underlying mongodb d
 OPTIONS:
    -h      Show this message
    -c      Check status of EOcat server and mongod processes
-   -s      Start the catalogue
+   -s      Start the EOCat server and mongodb
    -p port Set port number the catalogue server will listen too (default 3000)
    -S      use https protocol (default http)
    -e      Stop the catalogue server

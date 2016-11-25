@@ -1,0 +1,66 @@
+[{
+    "identifier": "S1A_IW_RAW__0SDV_20160210T171539_20160210T171611_009887_00E7E2",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    10.374385,
+                    49.089451
+                ],
+                [
+                    10.021151,
+                    50.586132
+                ],
+                [
+                    6.425132,
+                    50.182854
+                ],
+                [
+                    6.886442,
+                    48.687504
+                ],
+                [
+                    10.374385,
+                    49.089451
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "creationDate": "2016-06-10T06:30:29Z",
+        "title": "S1A_IW_RAW__0SDV_20160210T171539_20160210T171611_009887_00E7E2 (UPA)",
+        "date": "2016-02-10T17:15:42.94Z/2016-02-10T17:16:07.94Z",
+        "start": "2016-02-10T17:15:42.940Z",
+        "stop": "2016-02-10T17:16:07.940Z",
+        "earthObservation": {
+            "productInformation": {
+                "productType": "N/A",
+                "status": "ARCHIVED",
+                "timeliness": "Fast-24h"
+            },
+            "acquisitionInformation": [{
+                "acquisitionParameter": {
+                    "acquisitionStartTime": "2016-02-10T17:15:42.940Z",
+                    "acquisitionStopTime": "2016-02-10T17:16:07.940Z",
+                    "orbitNumber": "1000"
+                },
+                "sensor": {
+                    "instrument": "SAR",
+                    "operationalMode": "IW",
+                    "polarisationMode": "D",
+                    "polarisationChannels": "VV, VH"
+                },
+                "platform": {
+                    "platformShortName": "Sentinel-1",
+                    "platformSerialIdentifier": "A"
+                }
+            }]
+        },
+        "links": {
+            "data": [{
+                "href": "https://s1-pdmcdmz-oda-v-20.sentinel1.eo.esa.int/odabroker/rest/ngEO//S1A_IW_RAW__0SDV_20160210T171539_20160210T171611_009887_00E7E2?ngEO_DO={processing:GRD,resolution:HR}"
+            }]
+        }
+    }
+}]
