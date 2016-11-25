@@ -1,0 +1,40 @@
+Set-up on macos (tested on v10.11+)
+
+1- Install node :
+https://nodejs.org/dist/v7.0.0/node-v7.0.0.pkg
+
+2- install homebrew package manager:
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+3- install mongodb:
+brew install mongodb
+
+3- install utility to generate keys
+sudo npm install -g pwgen
+
+4- change dir to the root directory of EOCat (where this README file is located)
+
+5- install all node module dependencies required by EOCat (this creates a dir ./node_modules)
+npm install
+
+
+6- generate server keys and certificates (needed if using https) - This creates a ./ssl directory or replace the existing one
+TBC: skip this step. It could be that the key and certificates included in the package are good enough...
+./utilities/generate_ssl_keycert.sh
+
+7- start/stop the Catalogue server (this also spawn the mongodb process) - will listen to both http and https:
+  To start it: ./eocat -s
+      - If it does not already exist, this will create the dir ./data/mongodb where the database will be stored
+      - Once started, it opens the address https://localhost:3443/*/search?format=eocat&count=200&startIndex=1 in your default browser -> should be a json indicating the number of items found.
+  To stop it:  ./eocat -e
+  To check status: ./eocat -c
+
+
+To populate catalogue  (see example scripts in ./test) - run from the ./test/ dir
+curl -H "Content-Type: application/json" -vX POST --data @testProduct.json http://localhost:3000/products/
+
+Search example:
+curl  'http://localhost:3000/L_S1_SAR_IW/search?start=2015-12-24T00:00:00Z&stop=2015-12-26T23:59:59Z&bbox=-1.238689741328246,37.72928979042203,23.635026167534672,46.82259459559691&status=ARCHIVED&operationalMode=IW&ngEO_DO={processing:GRD,resolution:HR}&format=json&count=200&startIndex=1'
+
+Get a product by its id:
+curl  'http://localhost:3000/products/S1A_IW_RAW__0SDV_20151224T042858_20151224T042930_009179_00D377'

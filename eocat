@@ -1,0 +1,112 @@
+#!/bin/bash
+
+usage()
+{
+cat << EOF
+usage: ./eocat  [-s][-p port][-S]
+                [-e|-r]
+
+This script starts or stops the EO Catalogue server and the underlying mongodb database.
+
+OPTIONS:
+   -h      Show this message
+   -c      Check status of EOcat server and mongod processes
+   -s      Start the catalogue
+   -p port Set port number the catalogue server will listen too (default 3000)
+   -S      use https protocol (default http)
+   -e      Stop the catalogue server
+EOF
+}
+
+
+getMyIP() {
+    local _ip _myip _line _nl=$'\n'
+    while IFS=$': \t' read -a _line ;do
+        [ -z "${_line%inet}" ] &&
+           _ip=${_line[${#_line[1]}>4?1:2]} &&
+           [ "${_ip#127.0.0.1}" ] && _myip=$_ip
+      done< <(LANG=C /sbin/ifconfig)
+    printf ${1+-v} $1 "%s${_nl:0:$[${#1}>0?0:1]}" $_myip
+}
+
+getMyIP myIP
+echo $myIP
+
+mkdir -p ./data/mongodb
+mkdir -p ./log
+
+port="3000"
+prot="http"
+
+
+while getopts 'hcsp:Sre' flag; do
+  case "${flag}" in
+    h)  usage
+        exit 1
+        ;;
+    s)
+      oper='Start'
+      ;;
+    r) oper='Restart' ;;
+    p) port="${OPTARG}";;
+    e) oper='Stop' ;;
+    c) oper='Status' ;;
+    S) prot='https';;
+  esac
+done
+if [ -z "$1" ]; then
+  usage
+fi
+
+
+# get pid of EO Catalogue server if it's already running
+status=`ps -efww | grep -w "[n]ode eocatserver.js" | awk -v pid=$$ '$2 != pid { print $2 }'`
+
+statusdb=`ps -efww | grep -w "[m]ongod --config ./conf/mongod.conf" | awk -v pid=$$ '$2 != pid { print $2 }'`
+
+
+
+case "$oper" in
+  Start)
+    if [ ! -z "$status" ]; then
+      echo "Server is already running with pid $status"
+      exit 1;
+    fi
+    echo "Starting mongodb..."
+    mongod --config ./conf/mongod.conf &
+    echo "Starting EoCat..."
+    node eocatserver.js $prot $port &
+    sleep 5  # Give some time to server to start mongodb and establish connection with it
+    open "$prot://$myIP:$port/*/search?format=eocat&count=200&startIndex=1"
+    ;;
+  Stop)
+    if [ ! -z "$status" ]; then
+      echo "Found EOCat server running with pid $status. Will now stop it."
+      kill "$status"
+      echo "EoCat server stopped."
+    else
+      echo "Couldn't find a running EOCat server"
+    fi
+    if [ ! -z "$statusdb" ]; then
+      echo "Found mongod running with pid $statusdb. Will now stop it."
+      kill "$statusdb"
+      echo "mongod server stopped."
+    else
+      echo "Couldn't find a running mongod server"
+    fi
+    ;;
+  Status)
+  if [ ! -z "$status" ]; then
+    echo "EOCat server is running with pid $status. Use -e flag to stop it."
+    ps -efww | grep -w "[n]ode eocatserver.js"
+  else
+    echo "EOCat server is not running. Use -s flag to start it"
+  fi
+  if [ ! -z "$statusdb" ]; then
+    echo "mongod server is running with pid $statusdb. WARNING !! Never use 'kill 9' on this process !!)"
+    ps -efww | grep -w "[m]ongod --config ./conf/mongod.conf"
+  else
+    echo "mongod server is not running. [stop and] start EOCat to get it running."
+  fi
+
+esac
