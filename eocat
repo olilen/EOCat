@@ -13,8 +13,8 @@ OPTIONS:
    -c      Check status of EOcat server and mongod processes
    -s      Start the EOCat server and mongodb
    -p port Set port number the catalogue server will listen too (default 3000)
-   -S      use https protocol (default http)
-   -e      Stop the catalogue server
+   -S      Use https protocol (default http)
+   -e      Stop the EOCat server and mongodb
 EOF
 }
 
