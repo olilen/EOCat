@@ -15,6 +15,7 @@ var protocol = (process.argv[2])?process.argv[2]:'http';
 var port = (process.argv[3])?process.argv[3]:'3000';
 
 app.use(bodyParser.json({limit:10000000}));
+app.use(express.static('public'));
 
 //app.get('/products', products.findAll);
 app.get('/:dataset/search', products.search);
