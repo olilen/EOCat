@@ -41,6 +41,9 @@ For example:
 
 
 8- Testing
+Go to the EOCat installation folder (where this file is).
+Start server: 
+./eocat -s
 
 Populate the catalogue with test data:
 curl -H "Content-Type: application/json" -vX POST --data @./test-data/testProduct.json http://localhost:3000/products/
@@ -50,3 +53,8 @@ http://localhost:3000/L_S1_SAR_IW/search?start=2015-12-24T00:00:00Z&stop=2015-12
 
 Get product by its id:
 http://localhost:3000/products/S1A_IW_RAW__0SDV_20151224T042858_20151224T042930_009179_00D377
+
+To clean things up after testing:
+./eocat -e
+rm -R ./data
+
