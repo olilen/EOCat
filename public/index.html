@@ -1,6 +1,31 @@
 <html>
 <body>
-EOCat Server is up and running
-</body>
+  <!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
+  <h1><strong>Welcome to the EOCat Server.</strong></h1>
+  <p>&nbsp;</p>
+  <p><strong>Searching EOCat:</strong></p>
+  <p>Search requests are "compliant" with OGC's EO OpenSearch standard&nbsp;(OGC 13-026).</p>
+  <p>Typical search URL is <strong>https://server/&lt;dataset&gt;/search?&lt;param&gt;</strong><br /> where:</p>
+  <p style="padding-left: 30px;"><strong>&lt;dataset&gt;</strong> is matched to the product parentIdentifier attribute. if &lt;dataset&gt; is set to "*", search will be done across all datasets.</p>
+  <p style="padding-left: 30px;"><strong>&lt;param&gt; </strong>is a combination of the following search filters:</p>
+  <p style="padding-left: 90px;"><strong>start</strong>: e.g. "2016-12-05T16:41:25.000Z", "2016-12-05". Special values "today+&lt;n&gt;" or "today-&lt;n&gt;" where &lt;n&gt; is a number of days.</p>
+  <p style="padding-left: 90px;"><strong>stop</strong>: same constrains as for start</p>
+  <p style="padding-left: 90px;"><strong> geom</strong>: a geomtery in wkt. e.g. "&amp;geom=POLYGON((-118.31 45.82,-113.84 45.83,-113.42 42.35,-119.04 42.39,-120.27 44.42,-118.31 45.82)"</p>
+  <p style="padding-left: 90px;"><strong>bbox</strong>: a lowerLeft/TopRight box, e.g. "&amp;bbox=-180,-90,180,90"</p>
+  <p style="padding-left: 90px;"><strong>operationalMode</strong> | <strong>sensorMode</strong>:</p>
+  <p style="padding-left: 90px;"><strong>instrument</strong>:</p>
+  <p style="padding-left: 90px;"><strong>platformShortName</strong>:</p>
+  <p style="padding-left: 90px;"><strong>platformSerialIdentifier</strong>:</p>
+  <p style="padding-left: 90px;"><strong>productType</strong>:</p>
+  <p style="padding-left: 90px;"><strong>parentIdentifier</strong>:</p>
+  <p style="padding-left: 90px;"><strong>wlog</strong> | <strong>track</strong>: track number</p>
+  <p style="padding-left: 90px;"><strong>productionStatus</strong>: ARCHIVED | PLANNED</p>
+  <p style="padding-left: 90px;"><strong>orbitDirection</strong>:</p>
+  <p style="padding-left: 90px;"><strong>sort</strong>: sorting by start date of the result items. Allowed values: asc | ascending | 1 (Ascending) or desc | descending | -1 (Descending). Default is descending (from most recent&nbsp;to oldest products)</p>
+  <p style="padding-left: 90px;"><strong>Format</strong>: owc | eocat | json | ngeo&nbsp;</p>
+  <p style="padding-left: 120px;">owc: a geojson encoded OWS Context document where feature properties are&nbsp;a simplified version of the eop metadata</p>
+  <p style="padding-left: 120px;">eocat: internal database model (geojson&nbsp;where feature properties&nbsp;are&nbsp;a simplified version of the eop metadata</p>
+  <p style="padding-left: 120px;">json | ngeo: simulating ngEO responses (geojson with feature properties mapped from the full fledge eop metadata model)</p>
+  <p style="padding-left: 90px;">&nbsp;</p>
+  <h1 style="color: #5e9ca0;"><strong style="color: #000000; font-size: 11px;">&nbsp;</strong></h1></body>
 </html>
- 
