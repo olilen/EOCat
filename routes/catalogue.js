@@ -10,6 +10,7 @@ var AdmZip = require('adm-zip');
 var Converter = require("csvtojson").Converter;
 var outputFormaters = require("./outputFormaters");
 var inputFormaters = require("./inputFormaters");
+var rangeCriteria = require("./openSearchEORangeCriteria");
 
 //var converter = new Converter({delimiter: "\t"});
 
@@ -19,6 +20,20 @@ mongoose.connect('localhost',"products", 27017);
 // Use native promises
 mongoose.Promise = global.Promise;
 
+
+
+//  schema used for products stored in the database. It's basically a geojson feature with the additional attributes:
+//		- date, updated, title, links: required for OWS context
+//		- parentIdentifier, earthObservation: mapping the o&m metadata
+// ToDo:
+//			- add missing attributes from the O&M data model
+//			- OWS Context is missing a "published" date (from Atom). Is this the "date" attribute ? -> should date be mapped from o&m "resultTime" ?
+//			- start and stop attributes should be renamed productStartTime and productStopTime and moved inside the productInformation element
+//								* productStartTime and productStopTime are in general the same as acquisitionStartTime and
+//								acquisitionStopTime except for synergetic product where they aggregates the latter
+//								* start & stop search parameters should map to productStartTime and productStopTime for products and to acquisitionStartTime and
+//								acquisitionStopTime for acquisitions ?
+//			-
 
 var productSchema = mongoose.Schema({
 			identifier: { type: String,	index: true},
@@ -110,7 +125,8 @@ The following search criteria can be used as <param>:
 	platformSerialIdentifier:
 	productType:
 	parentIdentifier:
-	wlog | track:			track number
+	wlog | track:			track number (integer)
+	orbitNumber:						(integer)
 	productionStatus:
 	orbitDirection:
 	sort:							sorting by start date of the result items. Allowed values: asc | ascending | 1 (Ascending) or desc | descending | -1 (Descending)
@@ -161,6 +177,59 @@ The following search criteria can be used as <param>:
 		}
 	}
 
+	var filters = [];
+
+	// set geometry criteria
+	if(geo) filters.push(
+		{ "geometry":
+			{
+				"$geoIntersects": {
+					$geometry: geo
+	            		}
+			}
+		});
+
+
+		// set start criteria
+		if(req.query.start && req.query.stop) {
+			filters.push(
+				{"properties.start":
+					{$lt: new Date(req.query.stop)}
+			});
+		}
+
+		// set stop criteria
+		if(req.query.start && req.query.stop) {
+			filters.push(
+				{"properties.stop":
+					{$gt: new Date(req.query.start)}
+			});
+		}
+
+		// set other criteria (TBD: should be completed with other attributes)
+		if(req.query.operationalMode) filters.push({"properties.earthObservation.acquisitionInformation.sensor.operationalMode" : req.query.operationalMode});
+		if(req.query.sensorlMode) filters.push({"properties.earthObservation.acquisitionInformation.sensor.operationalMode" : req.query.sensorlMode});
+		if(req.query.instrument) filters.push({"properties.earthObservation.acquisitionInformation.sensor.instrument" : req.query.instrument});
+		if(req.query.platformShortName) filters.push({"properties.earthObservation.acquisitionInformation.platform.platformShortName" : req.query.platformShortName});
+		if(req.query.platformSerialIdentifier) filters.push({"properties.earthObservation.acquisitionInformation.platform.platformSerialIdentifier" : req.query.platformSerialIdentifier});
+		if(req.query.productType) filters.push({"properties.earthObservation.productInformation.productType" : req.query.productType});
+		if(req.query.parentIdentifier) filters.push({"properties.parentIdentifier" : req.query.parentIdentifier});
+		if(req.query.orbitNumber) filters.push(rangeCriteria.parse(req.query.orbitNumber,"properties.earthObservation.acquisitionInformation.acquisitionParameter.orbitNumber",parseInt));
+
+		if(dataset && dataset != '*') filters.push({"properties.parentIdentifier" : dataset});
+
+		// set track range criteria
+		var track;
+		if(req.query.wlog) track = req.query.wlog;
+		if(req.query.track) track = req.query.track;
+		if(track) {
+			console.log("track: "+track);
+			filters.push(rangeCriteria.parse(track,"properties.earthObservation.acquisitionInformation.acquisitionParameter.relativePassNumber",parseInt));
+		}
+
+		var criteria = (filters.length >= 1)?{$and: filters}:{};
+
+	/*
 	var criteria = { };
 
 	// set geometry criteria
@@ -178,12 +247,6 @@ The following search criteria can be used as <param>:
 	}
 
 	// TBD: use the accquisitionDates instead
-/*
-	if(req.query.start && req.query.stop) {
-		criteria["properties.earthObservation.acquisitionInformation.acquisitionParameter.acquisitionStartTime"] = {$lt: new Date(req.query.stop)};
-		criteria["properties.earthObservation.acquisitionInformation.acquisitionParameter.acquisitionStopTime"] = {$gt: new Date(req.query.start)};
-	}
-*/
 
 
 	// set other criteria (TBD: should be completed with other attributes)
@@ -196,56 +259,17 @@ The following search criteria can be used as <param>:
 	if(req.query.parentIdentifier) criteria["properties.parentIdentifier"] = req.query.parentIdentifier;
 
 	if(dataset && dataset != '*') criteria["properties.parentIdentifier"] = dataset;
+
 	var track;
 	if(req.query.wlog) track = req.query.wlog;
 	if(req.query.track) track = req.query.track;
-	if(track) {	// TBD: only support "[a,b]" notation
-		//var wlog = JSON.parse(req.query.wlog);
+	if(track) {
 		console.log("track: "+track);
-		var notation = track.replace(/[^\[\]\{\}]+/g,"x");
-		var minmax = track.replace(/[^0-9,]+/g,"").split(",");
-		console.log("min: "+minmax[0]);
-		console.log("max: "+minmax[1]);
-		var rpn = "properties.earthObservation.acquisitionInformation.acquisitionParameter.relativePassNumber"
-		switch (notation) {
-			case "[x]":
-				criteria[rpn] = {$lte: minmax[1], $gte: minmax[0] };
-				break;
-			case "]x[":
-				criteria[rpn] = {$lt: minmax[1], $gt: minmax[0] };
-				break;
-			case "[x":
-				criteria[rpn] = {$gte: minmax[0] };
-				break;
-			case "]x":
-				criteria[rpn] = {$gt: minmax[0]};
-				break;
-			case "x[":
-				criteria[rpn] = {$lt: minmax[0] };
-				break;
-			case "x]":
-				criteria[rpn] = {$lte: minmax[0]};
-				break;
-			case "]x]":
-				criteria[rpn] = {$lte: minmax[1], $gt: minmax[0] };
-				break;
-			case "[x[":
-				criteria[rpn] = {$lt: minmax[1], $gte: minmax[0] };
-				break;
-			case "{x}":
-				var flist = [];
-				for(var i = 0;i<minmax.length;i++) {
-					flist.push({$eq: minmax[i]});
-				}
-				criteria[rpn] = {$or: flist};
-				break;
-			case "":
-				criteria[rpn] = minmax[0];
-				break;
-		}
+		criteria["properties.earthObservation.acquisitionInformation.acquisitionParameter.relativePassNumber"] = rangeCriteria.parse(track,parseInt);
 	}
+*/
 
-	console.log("Filters: "+JSON.stringify(criteria));
+	console.log("Query: "+JSON.stringify(criteria));
 
 	//var paginatedQuery = Product.find(criteria).sort({'properties.start': 'desc'}).skip(parseInt(req.query.startIndex-1)).limit(count);
 	//var countQuery = Product.count(criteria);
