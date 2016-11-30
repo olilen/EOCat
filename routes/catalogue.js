@@ -27,13 +27,23 @@ mongoose.Promise = global.Promise;
 //		- parentIdentifier, earthObservation: mapping the o&m metadata
 // ToDo:
 //			- add missing attributes from the O&M data model
-//			- OWS Context is missing a "published" date (from Atom). Is this the "date" attribute ? -> should date be mapped from o&m "resultTime" ?
-//			- start and stop attributes should be renamed productStartTime and productStopTime and moved inside the productInformation element
-//								* productStartTime and productStopTime are in general the same as acquisitionStartTime and
-//								acquisitionStopTime except for synergetic product where they aggregates the latter
-//								* start & stop search parameters should map to productStartTime and productStopTime for products and to acquisitionStartTime and
-//								acquisitionStopTime for acquisitions ?
-//			-
+//			- OWS Context is missing a "published" date (from Atom). This concept is needed to implement a subscription or a catalogue feed  (i.e. download/show what's new since a given date)
+//								* Is this the "date" attribute ? -> should date be mapped from o&m "resultTime" ?
+//			- start and stop attributes are added for search convenience: they are indexed and map the OpenSearch criterii start and stop
+//								* TBD: start and stop attributes should be instanciated at ingestion time by
+//									aggregating the acquisitionStartTime and acquisitionStopTime attributes of the acquisitionInformation array
+//									or
+//									start and stop attributes should be removed from the schema, and the OpenSearch criterii start and stop should directly be mapped to the
+//									acquisitionStartTime and acquisitionStopTime attributes (the latter being indexed).
+//			- earthObservation.productInformation.status to be moved one level up, under earthObservation.status (as status PLANNED could qualify a single acquisition)
+//
+// this data model assumes that a product is always derived from at least one acquisition.
+// Following cases are supported:
+// 					- a product derived from one acquisition only, i.e. derived from the data acquired by one sensor/mode of one platform)
+//					- a product derived from more than one acquisition (synergetic products), i.e:
+//									* derived from the data acquired by several sensor/mode of one platform (not necessarily simutaneously)
+//									* derived from the data acquired by different platforms
+//					- a single acquisition (no productInformation)
 
 var productSchema = mongoose.Schema({
 			identifier: { type: String,	index: true},
