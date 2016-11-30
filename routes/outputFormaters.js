@@ -14,6 +14,7 @@ exports.owcFormat = function(item,model) {
   	delete newItem._id;
   	newItem.id = newItem.identifier;
   	delete newItem.identifier;
+		newItem.type = "Feature";
   	return newItem;
 
   } catch (err) {
