@@ -49,15 +49,12 @@ exports.mapFromngEO = function(item,dataset,model) {
 		}
 
       var newItem = {
-            identifier: item.properties.EarthObservation.metaDataProperty.EarthObservationMetaData.identifier,
+            id: item.properties.EarthObservation.metaDataProperty.EarthObservationMetaData.identifier,
             geometry: item.geometry,
             properties: {
-									parentIdentifier: dataset,
-                  updated: new Date(item.properties.EarthObservation.resultTime.TimeInstant.timePosition), // TBD: should it be instead the date when the product metadata is added in the catalogue ?
+                  updated: new Date(item.properties.EarthObservation.resultTime.TimeInstant.timePosition),
                   title: item.properties.title,
                   date: item.properties.EarthObservation.phenomenonTime.TimePeriod.beginPosition  +'/'+  item.properties.EarthObservation.phenomenonTime.TimePeriod.endPosition,
-                  start: new Date(item.properties.EarthObservation.phenomenonTime.TimePeriod.beginPosition),
-                  stop: new Date(item.properties.EarthObservation.phenomenonTime.TimePeriod.endPosition),
 									/*
                   links: {
                         data: [{
@@ -68,6 +65,8 @@ exports.mapFromngEO = function(item,dataset,model) {
                   },
 									*/
                   earthObservation: {
+												parentIdentifier: dataset,
+												status: item.properties.EarthObservation.metaDataProperty.EarthObservationMetaData.status,
                         acquisitionInformation: [{
                               platform: {
                                     platformShortName: item.properties.EarthObservation.procedure.EarthObservationEquipment.platform.Platform.shortName,
@@ -80,8 +79,8 @@ exports.mapFromngEO = function(item,dataset,model) {
                                     polarisationChannels: item.properties.EarthObservation.procedure.EarthObservationEquipment.acquisitionParameters.Acquisition.polarisationChannels
                               },
                               acquisitionParameter: {
-                                    acquisitionStartTime: item.properties.EarthObservation.phenomenonTime.TimePeriod.beginPosition,
-                                    acquisitionStopTime: item.properties.EarthObservation.phenomenonTime.TimePeriod.endPosition,
+                                    acquisitionStartTime: new Date(item.properties.EarthObservation.phenomenonTime.TimePeriod.beginPosition),
+                                    acquisitionStopTime: new Date(item.properties.EarthObservation.phenomenonTime.TimePeriod.endPosition),
 																		relativePassNumber: parseInt(item.properties.EarthObservation.procedure.EarthObservationEquipment.acquisitionParameters.Acquisition.wrsLongitudeGrid['#text']),
 																		orbitNumber: parseInt(item.properties.EarthObservation.procedure.EarthObservationEquipment.acquisitionParameters.Acquisition.orbitNumber),
 																		startTimeFromAscendingNode: (item.properties.EarthObservation.procedure.EarthObservationEquipment.acquisitionParameters.Acquisition.startTimeFromAscendingNode)?
@@ -94,7 +93,6 @@ exports.mapFromngEO = function(item,dataset,model) {
                         }],
                         productInformation: {
                               productType: item.properties.EarthObservation.metaDataProperty.EarthObservationMetaData.productType,
-                              status: item.properties.EarthObservation.metaDataProperty.EarthObservationMetaData.status,
                               timeliness: (item.properties.EarthObservation.result)?
 																item.properties.EarthObservation.result.EarthObservationResult.product.ProductInformation.timeliness:'',
 															size: (item.properties.EarthObservation.result)?
@@ -183,21 +181,20 @@ exports.mapFromHub = function(item,dataset,model) {
 			console.log("hub size in bytes: "+sizeInBytes);
 
       var newItem = {
-            identifier: indexes["summary"]["Identifier"],
+            id: indexes["summary"]["Identifier"],
             geometry: itemGeometry,
             properties: {
-									parentIdentifier: dataset,
                   updated: new Date(indexes["product"]["Ingestion Date"]),
                   title: indexes["summary"]["Identifier"],
                   date: indexes["product"]["Sensing start"]  +'/'+  indexes["product"]["Sensing stop"],
-                  start: new Date(indexes["product"]["Sensing start"]),
-                  stop: new Date(indexes["product"]["Sensing stop"]),
                   links: {
                         data: [{
                               href: "https://server/"+indexes["summary"]["Filename"],
                         }]
                   },
                   earthObservation: {
+												parentIdentifier: dataset,
+												status: indexes["product"]["Status"],
                         acquisitionInformation: [{
                               platform: {
                                     platformShortName: indexes["summary"]["Satellite"],
@@ -210,8 +207,8 @@ exports.mapFromHub = function(item,dataset,model) {
                                     polarisationChannels: indexes["product"]["Polarisation"]
                               },
                               acquisitionParameter: {
-                                    acquisitionStartTime: indexes["product"]["Sensing start"],
-                                    acquisitionStopTime: indexes["product"]["Sensing stop"],
+                                    acquisitionStartTime: new Date(indexes["product"]["Sensing start"]),
+                                    acquisitionStopTime: new Date(indexes["product"]["Sensing stop"]),
 																		relativePassNumber: parseInt(indexes["product"]["Relative orbit (start)"]),
 																		orbitNumber: parseInt(indexes["product"]["Orbit number (start)"]),
 																		startTimeFromAscendingNode: null,
@@ -222,7 +219,6 @@ exports.mapFromHub = function(item,dataset,model) {
                         }],
                         productInformation: {
                               productType: indexes["product"]["Product type"],
-                              status: indexes["product"]["Status"],
                               timeliness: indexes["product"]["Timeliness Category"],
 															size: sizeInBytes
                         }
@@ -267,15 +263,14 @@ exports.mapFromIndex = function(item,dataset) {
 	                  updated: new Date(item.availabilityTime),
 	                  title: item.productId,
 	                  date: item.beginAcquisition  +'/'+  item.endAcquisition,
-	                  start: new Date(item.beginAcquisition),
-	                  stop: new Date(item.endAcquisition),
-										parentIdentifier: dataset,
 	                  links: {
 	                        data: [{
 	                              href: item.productURI
 	                        }]
 	                  },
 	                  earthObservation: {
+													parentIdentifier: dataset,
+													status: "ARCHIVED",
 	                        acquisitionInformation: [{
 	                              platform: {
 	                                    platformShortName: item.platformShortName,
@@ -288,8 +283,8 @@ exports.mapFromIndex = function(item,dataset) {
 																			polarisationChannels: (item.polarisationMode)?item.polarisationChannels:null,
 	                              },
 	                              acquisitionParameter: {
-	                                    acquisitionStartTime: item.beginAcquisition,
-	                                    acquisitionStopTime: item.endAcquisition,
+	                                    acquisitionStartTime: new Date(item.beginAcquisition),
+	                                    acquisitionStopTime: new Date(item.endAcquisition),
 																			orbitNumber: parseInt(item.orbitNumber),
 																			orbitDirection: item.orbitDirection,
 																			relativePassNumber: (item.wrsLongitudeGrid)?parseInt(item.wrsLongitudeGrid):null
@@ -298,7 +293,6 @@ exports.mapFromIndex = function(item,dataset) {
 	                        }],
 	                        productInformation: {
 	                              productType: item.productType,
-	                              status: "ARCHIVED",
 	                        }
 	                  }
 	            }

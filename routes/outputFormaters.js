@@ -12,8 +12,6 @@ exports.owcFormat = function(item,model) {
   	var tempItem = new model(item);
   	var newItem = tempItem.toObject();
   	delete newItem._id;
-  	newItem.id = newItem.identifier;
-  	delete newItem.identifier;
 		newItem.type = "Feature";
   	return newItem;
 
@@ -27,7 +25,7 @@ exports.ngeoFormat = function(item,model) {
   try {
 
   	var newItem = 	{
-  		"id": item.identifier,
+  		"id": item.id,
   		"properties": {
   			"links": [{
   				"@href": "",
@@ -54,8 +52,8 @@ exports.ngeoFormat = function(item,model) {
   				"phenomenonTime": {
   					"TimePeriod": {
   						"@id": "TimePeriod_" + item._id,
-  						"beginPosition": item.properties.start,
-  						"endPosition": item.properties.stop
+  						"beginPosition": item.properties.earthObservation.acquisitionInformation[0].acquisitionParameter.acquisitionStartTime,
+  						"endPosition": item.properties.earthObservation.acquisitionInformation[0].acquisitionParameter.acquisitionStopTime
   					}
   				},
   				"resultTime": {
@@ -136,14 +134,14 @@ exports.ngeoFormat = function(item,model) {
   				},
   				"metaDataProperty": {
   					"EarthObservationMetaData": {
-  						"identifier": item.identifier,
+  						"identifier": item.id,
   						"acquisitionType": "NOMINAL",
   						"productType": item.properties.earthObservation.productInformation.productType,
-  						"status": item.properties.earthObservation.productInformation.status
+  						"status": item.properties.earthObservation.status
   					}
   				},
   			},
-  			"identifier": item.identifier
+  			"identifier": item.id
   		},
   		"type": "Feature",
   		"geometry": item.geometry
