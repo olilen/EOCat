@@ -53,7 +53,7 @@ exports.mapFromngEO = function(item,dataset,model) {
             geometry: item.geometry,
             properties: {
 									parentIdentifier: dataset,
-                  updated: item.properties.published, // TBD: should it be instead the date when the product metadata is added in the catalogue ?
+                  updated: new Date(item.properties.EarthObservation.resultTime.TimeInstant.timePosition), // TBD: should it be instead the date when the product metadata is added in the catalogue ?
                   title: item.properties.title,
                   date: item.properties.EarthObservation.phenomenonTime.TimePeriod.beginPosition  +'/'+  item.properties.EarthObservation.phenomenonTime.TimePeriod.endPosition,
                   start: new Date(item.properties.EarthObservation.phenomenonTime.TimePeriod.beginPosition),
@@ -187,7 +187,7 @@ exports.mapFromHub = function(item,dataset,model) {
             geometry: itemGeometry,
             properties: {
 									parentIdentifier: dataset,
-                  creationDate: indexes["product"]["Ingestion Date"],
+                  updated: new Date(indexes["product"]["Ingestion Date"]),
                   title: indexes["summary"]["Identifier"],
                   date: indexes["product"]["Sensing start"]  +'/'+  indexes["product"]["Sensing stop"],
                   start: new Date(indexes["product"]["Sensing start"]),
@@ -264,7 +264,7 @@ exports.mapFromIndex = function(item,dataset) {
 	            identifier: item.productId,
 	            geometry: itemGeometry,
 	            properties: {
-	                  updated: item.availabilityTime,
+	                  updated: new Date(item.availabilityTime),
 	                  title: item.productId,
 	                  date: item.beginAcquisition  +'/'+  item.endAcquisition,
 	                  start: new Date(item.beginAcquisition),

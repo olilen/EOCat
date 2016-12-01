@@ -53,7 +53,7 @@ var productSchema = mongoose.Schema({
     		date: { type: String},
     		start: { type: Date, index: true}, // for products derived from multiple acquisitions, start/stop is an aggregation of the various acquisition dates
     		stop: { type: Date, index: true},
-    		updated: { type: Date}, // data when product is made available
+    		updated: { type: Date, index:true, default: Date.now}, // date when product is made available
     		title: String,
     		links: {
     			data: [{
@@ -135,10 +135,11 @@ The following search criteria can be used as <param>:
 	platformSerialIdentifier:
 	productType:
 	parentIdentifier:
-	wlog | track:			track number (integer)
-	orbitNumber:						(integer)
+	wlog | track:			track number (range notation supported)
+	orbitNumber:			orbit number (range notation supported)
 	productionStatus:
 	orbitDirection:
+	availabilityTime: date when product was made available (range notation supported)
 	sort:							sorting by start date of the result items. Allowed values: asc | ascending | 1 (Ascending) or desc | descending | -1 (Descending)
 **/
 
@@ -224,7 +225,7 @@ The following search criteria can be used as <param>:
 		if(req.query.platformSerialIdentifier) filters.push({"properties.earthObservation.acquisitionInformation.platform.platformSerialIdentifier" : req.query.platformSerialIdentifier});
 		if(req.query.productType) filters.push({"properties.earthObservation.productInformation.productType" : req.query.productType});
 		if(req.query.parentIdentifier) filters.push({"properties.parentIdentifier" : req.query.parentIdentifier});
-		if(req.query.orbitNumber) filters.push(rangeCriteria.parse(req.query.orbitNumber,"properties.earthObservation.acquisitionInformation.acquisitionParameter.orbitNumber",parseInt));
+		if(req.query.orbitNumber) filters.push(rangeCriteria.parse(req.query.orbitNumber,"properties.earthObservation.acquisitionInformation.acquisitionParameter.orbitNumber",false));
 
 		if(dataset && dataset != '*') filters.push({"properties.parentIdentifier" : dataset});
 
@@ -234,7 +235,11 @@ The following search criteria can be used as <param>:
 		if(req.query.track) track = req.query.track;
 		if(track) {
 			console.log("track: "+track);
-			filters.push(rangeCriteria.parse(track,"properties.earthObservation.acquisitionInformation.acquisitionParameter.relativePassNumber",parseInt));
+			filters.push(rangeCriteria.parse(track,"properties.earthObservation.acquisitionInformation.acquisitionParameter.relativePassNumber",false)	);
+		}
+		if(req.query.availabilityTime) {
+			console.log("availabilityTime: "+req.query.availabilityTime);
+			filters.push(rangeCriteria.parse(req.query.availabilityTime,"properties.updated",true));
 		}
 
 		var criteria = (filters.length >= 1)?{$and: filters}:{};
