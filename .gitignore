@@ -1,5 +1,5 @@
 ssl/
-data/
+data*/
 log/
 *.zip
 node_modules/
