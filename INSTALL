@@ -1,28 +1,28 @@
 Set-up on macos (tested on v10.11+)
 
 1- Install node :
-https://nodejs.org
+> https://nodejs.org
 
 2- install homebrew package manager:
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+> /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 3- install mongodb:
-brew install mongodb
+> brew install mongodb
 
 3- install utility to generate keys
-sudo npm install -g pwgen
+> sudo npm install -g pwgen
 
 4- change dir to the root directory of EOCat (where this README file is located)
 
 5- install all node module dependencies required by EOCat (this creates a dir ./node_modules)
-npm install
+> npm install
 
-6- generate server keys and certificates (needed if using https) - This creates a ./ssl directory or replace the existing one
-./utilities/generate_ssl_keycert.sh
+6- generate self-signed server keys and certificates (needed if using https)
+>./utilities/generate_ssl_keycert.sh
 
-7- You should now be OK to go... Use the provided eocat script to operate the EOCat server: 
+7- You should now be OK to go... Use the provided eocat script to operate the EOCat server:
 Usage: ./eocat  OPTIONS
-OPTIONS: 
+OPTIONS:
    -h      Show this message
    -c      Check status of EOcat server and mongod processes
    -s      Start the EOCat server and mongodb
@@ -35,26 +35,26 @@ The script first starts the mongodb database (on port 27017), then the EOCat ser
 
 
 For example:
-  - Start an EOCat server listening to https on port 3443: ./eocat -s -S -p 3443
-  - Start an EOCat server listening to http on port 8080: ./eocat -s  -p 8080
-  - Start an EOCat server listening to http on port 3000: ./eocat -s
+  - Start an EOCat server listening to https on port 3443: > ./eocat -s -S -p 3443
+  - Start an EOCat server listening to http on port 8080: > ./eocat -s  -p 8080
+  - Start an EOCat server listening to http on port 3000: > ./eocat -s
 
 
 8- Testing
 Go to the EOCat installation folder (where this file is).
-Start server: 
-./eocat -s
+Start server:
+> ./eocat -s
 
-Populate the catalogue with test data:
-curl -H "Content-Type: application/json" -vX POST --data @./test-data/testProduct.json http://localhost:3000/products/
+Populate the catalogue with 1 test product:
+> curl -H "Content-Type: application/json" --data @./test-data/testProduct.json http://localhost:3000/products?dataset=test%20Dataset
 
-OpenSearch URL example:
-http://localhost:3000/L_S1_SAR_IW/search?start=2015-12-24T00:00:00Z&stop=2015-12-26T23:59:59Z&bbox=-1.238689741328246,37.72928979042203,23.635026167534672,46.82259459559691&status=ARCHIVED&operationalMode=IW&ngEO_DO={processing:GRD,resolution:HR}&format=json&count=200&startIndex=1
+Find it (use a web browser):
+http://localhost:3000/*/search
+http://localhost:3000/testDataset/search
 
 Get product by its id:
-http://localhost:3000/products/S1A_IW_RAW__0SDV_20151224T042858_20151224T042930_009179_00D377
+http://localhost:3000/products/test%20product%201
 
 To clean things up after testing:
-./eocat -e
-rm -R ./data
-
+> ./eocat -e
+> rm -R ../eocatdata
