@@ -7,14 +7,14 @@ exports.mapFromEOCat = function(item,dataset,model) {
 	try {
 		var newItem = item;
 		if(!dataset) {
-			item.properties.parentIdentifier = "native_"
+			item.properties.earthObservation.parentIdentifier = "native_"
 				+item.properties.earthObservation.acquisitionInformation[0].platform.platformShortName
 				+"_"
 				+item.properties.earthObservation.acquisitionInformation[0].sensor.instrument
 				+"_"
 				+item.properties.earthObservation.acquisitionInformation[0].sensor.operationalMode;
 		} else {
-			item.properties.parentIdentifier = dataset;
+			item.properties.earthObservation.parentIdentifier = dataset;
 		}
 		try {
 			var testi = new model(item);

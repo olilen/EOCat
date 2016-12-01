@@ -225,7 +225,7 @@ The following search criteria can be used as <param>:
 		if(req.query.orbitNumber) filters.push(rangeCriteria.parse(req.query.orbitNumber,"properties.earthObservation.acquisitionInformation.acquisitionParameter.orbitNumber",false));
 		if(req.query.productionStatus) filters.push({"properties.earthObservation.status" : req.query.productionStatus});
 
-		if(dataset && dataset != '*') filters.push({"properties.parentIdentifier" : dataset});
+		if(dataset && dataset != '*') filters.push({"properties.earthObservation.parentIdentifier" : dataset});
 
 		// set track range criteria
 		var track;
@@ -394,16 +394,21 @@ function save(records, Model, match){
 
 exports.addProduct = function(req, res) {
 	var dataset = req.query.dataset;
-	var products = req.body.map(function(a) {return inputFormaters.mapFromEOCat(a,dataset,Product);});
-	console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
-	save(products,Product,"id").then(
-		function(bulkRes){
-			console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
-			res.send({'report':bulkRes});
-		},
-		function(err) {
-			console.log("Bulk insert error");
-		});
+	try {
+		var products = req.body.map(function(a) {return inputFormaters.mapFromEOCat(a,dataset,Product);});
+		console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
+		save(products,Product,"id").then(
+			function(bulkRes){
+				console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
+				res.send({'report':bulkRes});
+			},
+			function(err) {
+				console.log("Bulk insert error");
+			});
+	}
+	catch(err) {
+		res.send({'error':"Error updating data"});
+	}
 }
 
 exports.addProductFromNgEO = function(req, res) {
