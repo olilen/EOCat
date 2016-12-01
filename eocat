@@ -32,8 +32,8 @@ getMyIP() {
 getMyIP myIP
 echo $myIP
 
-mkdir -p ./data/mongodb
-mkdir -p ./log
+mkdir -p ../eocatdata/mongodb
+mkdir -p ../eocatdata/log
 
 port="3000"
 prot="http"
