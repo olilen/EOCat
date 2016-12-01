@@ -9,7 +9,7 @@ Set-up on macos (tested on v10.11+)
 3- install mongodb:
 > brew install mongodb
 
-3- install utility to generate keys
+3- install utility to generate key (needed if using https)
 > sudo npm install -g pwgen
 
 4- change dir to the root directory of EOCat (where this README file is located)
@@ -17,8 +17,9 @@ Set-up on macos (tested on v10.11+)
 5- install all node module dependencies required by EOCat (this creates a dir ./node_modules)
 > npm install
 
-6- generate self-signed server keys and certificates (needed if using https)
->./utilities/generate_ssl_keycert.sh
+6- generate self-signed server key and certificate (needed if using https)
+   You could skip this step and use the default ones provided in the ./ssl folder. It's however recommended you generate your own.
+> ./utilities/generate_ssl_keycert.sh
 
 7- You should now be OK to go... Use the provided eocat script to operate the EOCat server:
 Usage: ./eocat  OPTIONS
