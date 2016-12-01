@@ -30,7 +30,7 @@ OPTIONS:
    -S      use https protocol (default http)
    -e      Stop the EOCat server and mongodb
 
-Should it not find them, the eocat script creates the folders ./data/mongodb (mongodb database) and ./log (mongodb log file).
+Should it not find them, the eocat script creates the folders ../eocatdata/mongodb (mongodb database) and ../eocatdata/log (mongodb log file).
 The script first starts the mongodb database (on port 27017), then the EOCat server, and finally issues a search request that counts the number of items found in the mongodb database (results are shown in the default browser application).
 
 
