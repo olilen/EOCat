@@ -46,13 +46,10 @@ mongoose.Promise = global.Promise;
 //					- a single acquisition (no productInformation)
 
 var productSchema = mongoose.Schema({
-			identifier: { type: String,	index: true},
+			id: { type: String,	index: true},
     	geometry: mongoose.Schema.Types.GeoJSON,
     	properties: {
-    		parentIdentifier: {type: String},
     		date: { type: String},
-    		start: { type: Date, index: true}, // for products derived from multiple acquisitions, start/stop is an aggregation of the various acquisition dates
-    		stop: { type: Date, index: true},
     		updated: { type: Date, index:true, default: Date.now}, // date when product is made available
     		title: String,
     		links: {
@@ -64,6 +61,8 @@ var productSchema = mongoose.Schema({
     			}]
     		},
 	    	earthObservation: {
+					parentIdentifier: {type: String},
+					status: {type: String},
 	    		acquisitionInformation: [{
 	    			platform: {
 	    				platformShortName: {type: String},
@@ -76,8 +75,8 @@ var productSchema = mongoose.Schema({
 	            polarisationChannels: {type: String}
 	    			},
 	    			acquisitionParameter: {
-	    				acquisitionStartTime: { type: Date},
-	    				acquisitionStopTime: { type: Date},
+	    				acquisitionStartTime: { type: Date, index: true},
+	    				acquisitionStopTime: { type: Date, index: true},
 	    				relativePassNumber: { type: Number},
 	    				orbitNumber: { type: Number},
 	    				startTimeFromAscendingNode: { type: Number},
@@ -87,7 +86,6 @@ var productSchema = mongoose.Schema({
 	    		}],
 	    		productInformation: {
 	    			productType: {type: String},
-	    			status: {type: String},
 	    			timeliness: {type: String},
 						size: { type: Number}
 	    		}
@@ -137,7 +135,7 @@ The following search criteria can be used as <param>:
 	parentIdentifier:
 	wlog | track:			track number (range notation supported)
 	orbitNumber:			orbit number (range notation supported)
-	productionStatus:
+	productionStatus: product or acquisition status (ARCHIVED | ACQUIRED | PLANNED)
 	orbitDirection:
 	availabilityTime: date when product was made available (range notation supported)
 	sort:							sorting by start date of the result items. Allowed values: asc | ascending | 1 (Ascending) or desc | descending | -1 (Descending)
@@ -201,21 +199,20 @@ The following search criteria can be used as <param>:
 		});
 
 
-		// set start criteria
+		// set start stop criteria
+		if(req.query.start && !req.query.stop) req.query.stop = "2050-12-12T23:59:59.999Z";
+		if(!req.query.start && req.query.stop) req.query.start = "1970-01-01T00:00:00.000Z";
 		if(req.query.start && req.query.stop) {
 			filters.push(
-				{"properties.start":
+				{"properties.earthObservation.acquisitionInformation.acquisitionParameter.acquisitionStartTime":
 					{$lt: new Date(req.query.stop)}
 			});
-		}
-
-		// set stop criteria
-		if(req.query.start && req.query.stop) {
 			filters.push(
-				{"properties.stop":
+				{"properties.earthObservation.acquisitionInformation.acquisitionParameter.acquisitionStopTime":
 					{$gt: new Date(req.query.start)}
 			});
 		}
+
 
 		// set other criteria (TBD: should be completed with other attributes)
 		if(req.query.operationalMode) filters.push({"properties.earthObservation.acquisitionInformation.sensor.operationalMode" : req.query.operationalMode});
@@ -226,19 +223,18 @@ The following search criteria can be used as <param>:
 		if(req.query.productType) filters.push({"properties.earthObservation.productInformation.productType" : req.query.productType});
 		if(req.query.parentIdentifier) filters.push({"properties.parentIdentifier" : req.query.parentIdentifier});
 		if(req.query.orbitNumber) filters.push(rangeCriteria.parse(req.query.orbitNumber,"properties.earthObservation.acquisitionInformation.acquisitionParameter.orbitNumber",false));
+		if(req.query.productionStatus) filters.push({"properties.earthObservation.status" : req.query.productionStatus});
 
-		if(dataset && dataset != '*') filters.push({"properties.parentIdentifier" : dataset});
+		if(dataset && dataset != '*') filters.push({"properties.earthObservation.parentIdentifier" : dataset});
 
 		// set track range criteria
 		var track;
 		if(req.query.wlog) track = req.query.wlog;
 		if(req.query.track) track = req.query.track;
 		if(track) {
-			console.log("track: "+track);
 			filters.push(rangeCriteria.parse(track,"properties.earthObservation.acquisitionInformation.acquisitionParameter.relativePassNumber",false)	);
 		}
 		if(req.query.availabilityTime) {
-			console.log("availabilityTime: "+req.query.availabilityTime);
 			filters.push(rangeCriteria.parse(req.query.availabilityTime,"properties.updated",true));
 		}
 
@@ -363,7 +359,7 @@ The following search criteria can be used as <param>:
 exports.findById = function(req, res) {
     	var id = req.params.id;
     	console.log('Retrieving product: ' + id);
-    	Product.findOne({"identifier": id},function(err,results) {
+    	Product.findOne({"id": id},function(err,results) {
 		if (!err) {
 			res.send(results);
 		} else {
@@ -398,16 +394,21 @@ function save(records, Model, match){
 
 exports.addProduct = function(req, res) {
 	var dataset = req.query.dataset;
-	var products = req.body.map(function(a) {return inputFormaters.mapFromEOCat(a,dataset,Product);});
-	console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
-	save(products,Product,"identifier").then(
-		function(bulkRes){
-			console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
-			res.send({'report':bulkRes});
-		},
-		function(err) {
-			console.log("Bulk insert error");
-		});
+	try {
+		var products = req.body.map(function(a) {return inputFormaters.mapFromEOCat(a,dataset,Product);});
+		console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
+		save(products,Product,"id").then(
+			function(bulkRes){
+				console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
+				res.send({'report':bulkRes});
+			},
+			function(err) {
+				console.log("Bulk insert error");
+			});
+	}
+	catch(err) {
+		res.send({'error':"Error updating data"});
+	}
 }
 
 exports.addProductFromNgEO = function(req, res) {
@@ -415,7 +416,7 @@ exports.addProductFromNgEO = function(req, res) {
 	var products = req.body.map(function(a) {return inputFormaters.mapFromngEO(a,dataset,Product);});
 	//console.log(JSON.stringify(products));
 	console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
-	save(products,Product,"identifier").then(function(bulkRes){
+	save(products,Product,"id").then(function(bulkRes){
 	console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
 	res.send({'report':bulkRes});
 	});
@@ -426,7 +427,7 @@ exports.addProductFromHub = function(req, res) {
 	//console.log(JSON.stringify(products));
 	console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
 
-	save(products,Product,"identifier").then(function(bulkRes){
+	save(products,Product,"id").then(function(bulkRes){
 	console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
 	res.send({'report':bulkRes});
 	});
@@ -440,7 +441,7 @@ exports.updateProduct = function(req, res) {
 	var product = req.body;
 	console.log('Updating product: ' + id);
 	console.log(JSON.stringify(product));
-	Product.update({'identifier':id}, product, {safe:true}, function(err, result) {
+	Product.update({'id':id}, product, {safe:true}, function(err, result) {
             	if (err) {
                 		console.log('Error updating product: ' + err);
                 		res.send({'error':'An error has occurred'});
@@ -454,7 +455,7 @@ exports.updateProduct = function(req, res) {
 exports.deleteProduct = function(req, res) {
 	var id = req.params.id;
 	console.log('Deleting product: ' + id);
-	Product.remove({'identifier':id}, {safe:true}, function(err, result) {
+	Product.remove({'id':id}, {safe:true}, function(err, result) {
 	            if (err) {
             		res.send({'error':'An error has occurred - ' + err});
             	} else {
@@ -490,13 +491,13 @@ exports.harvestOADS = function(req, res) {
 				parsedata.end();
 				console.log(indexFileList.length + " Index files to process...");
 				processIndexFilesRecusively(req.query.dataset, req.query.url, indexFileList, 0);
+				//for(var i = 0; i<indexFileList.length; i++) processIndexFile(dataset,baseUrl,indexFileList[i]);
 				res.send(message);
-
-
 		 	}
 		}
 	);
 }
+
 
 var processIndexFilesRecusively = function(dataset,baseUrl,indexFileList,cursor) {
 
@@ -516,33 +517,28 @@ var processIndexFilesRecusively = function(dataset,baseUrl,indexFileList,cursor)
 					//console.log(zipEntry.getData().toString('utf8'));
 					var converter = new Converter({delimiter: "\t"});
 					converter.fromString(zipEntry.getData().toString('utf8'), function(err,result){
-						addProductFromIndex(dataset,result);
+						var products = result.map(function(a) {return inputFormaters.mapFromIndex(a,dataset);});
+						console.log(products.length +' products found in Index file ');
+						if(products.length > 0) {
+							save(products,Product,"id").then(function(bulkRes){
+		      			console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
+								if((cursor + 1) < indexFileList.length) {
+									processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
+								}
+							});
+
+						} else {
+							if((cursor + 1) < indexFileList.length) {
+								processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
+							}
+
+						}
 					});
 				});
-				if((cursor + 1) < indexFileList.length) {
-					processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
-				}
 			}
 
 
 		}
 	);
-
-}
-
-
-
-var addProductFromIndex = function(dataset,data) {
-	//console.log(JSON.stringify(data));
-	var products = data.map(function(a) {return inputFormaters.mapFromIndex(a,dataset);});
-	//console.log(JSON.stringify(data));
-	console.log(products.length +' products found in Index file ');
-	//console.log('Adding products: ' + JSON.stringify(products));
-
-        	save(products,Product,"identifier").then(function(bulkRes){
-      		console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
-      		//res.send({'report':bulkRes});
-	});
-
 
 }

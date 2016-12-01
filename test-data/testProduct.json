@@ -1,5 +1,5 @@
 [{
-    "identifier": "S1A_IW_RAW__0SDV_20160210T171539_20160210T171611_009887_00E7E2",
+    "id": "test product 1",
     "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -28,15 +28,13 @@
         ]
     },
     "properties": {
-        "creationDate": "2016-06-10T06:30:29Z",
+        "updated": "2016-06-10T06:30:29Z",
         "title": "S1A_IW_RAW__0SDV_20160210T171539_20160210T171611_009887_00E7E2 (UPA)",
         "date": "2016-02-10T17:15:42.94Z/2016-02-10T17:16:07.94Z",
-        "start": "2016-02-10T17:15:42.940Z",
-        "stop": "2016-02-10T17:16:07.940Z",
         "earthObservation": {
+            "status": "ARCHIVED",
             "productInformation": {
                 "productType": "N/A",
-                "status": "ARCHIVED",
                 "timeliness": "Fast-24h"
             },
             "acquisitionInformation": [{
