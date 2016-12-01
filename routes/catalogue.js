@@ -524,13 +524,13 @@ var processIndexFilesRecusively = function(dataset,baseUrl,indexFileList,cursor)
 		      			console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
 								if((cursor + 1) < indexFileList.length) {
 									processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
-								}
+								} else console.log("Harvesting completed !");
 							});
 
 						} else {
 							if((cursor + 1) < indexFileList.length) {
 								processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
-							}
+							} else console.log("Harvesting completed !");
 
 						}
 					});
