@@ -491,13 +491,13 @@ exports.harvestOADS = function(req, res) {
 				parsedata.end();
 				console.log(indexFileList.length + " Index files to process...");
 				processIndexFilesRecusively(req.query.dataset, req.query.url, indexFileList, 0);
+				//for(var i = 0; i<indexFileList.length; i++) processIndexFile(dataset,baseUrl,indexFileList[i]);
 				res.send(message);
-
-
 		 	}
 		}
 	);
 }
+
 
 var processIndexFilesRecusively = function(dataset,baseUrl,indexFileList,cursor) {
 
@@ -517,33 +517,28 @@ var processIndexFilesRecusively = function(dataset,baseUrl,indexFileList,cursor)
 					//console.log(zipEntry.getData().toString('utf8'));
 					var converter = new Converter({delimiter: "\t"});
 					converter.fromString(zipEntry.getData().toString('utf8'), function(err,result){
-						addProductFromIndex(dataset,result);
+						var products = result.map(function(a) {return inputFormaters.mapFromIndex(a,dataset);});
+						console.log(products.length +' products found in Index file ');
+						if(products.length > 0) {
+							save(products,Product,"id").then(function(bulkRes){
+		      			console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
+								if((cursor + 1) < indexFileList.length) {
+									processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
+								}
+							});
+
+						} else {
+							if((cursor + 1) < indexFileList.length) {
+								processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
+							}
+
+						}
 					});
 				});
-				if((cursor + 1) < indexFileList.length) {
-					processIndexFilesRecusively(dataset,baseUrl,indexFileList,cursor+1);
-				}
 			}
 
 
 		}
 	);
-
-}
-
-
-
-var addProductFromIndex = function(dataset,data) {
-	//console.log(JSON.stringify(data));
-	var products = data.map(function(a) {return inputFormaters.mapFromIndex(a,dataset);});
-	//console.log(JSON.stringify(data));
-	console.log(products.length +' products found in Index file ');
-	//console.log('Adding products: ' + JSON.stringify(products));
-
-        	save(products,Product,"id").then(function(bulkRes){
-      		console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
-      		//res.send({'report':bulkRes});
-	});
-
 
 }

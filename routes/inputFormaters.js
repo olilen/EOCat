@@ -257,7 +257,7 @@ exports.mapFromIndex = function(item,dataset) {
 
 
 	      var newItem = {
-	            identifier: item.productId,
+	            id: item.productId,
 	            geometry: itemGeometry,
 	            properties: {
 	                  updated: new Date(item.availabilityTime),
