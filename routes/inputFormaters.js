@@ -16,6 +16,28 @@ exports.mapFromEOCat = function(item,dataset,model) {
 		} else {
 			item.properties.earthObservation.parentIdentifier = dataset;
 		}
+
+		if(!newItem.properties.date) {
+			var minDate = "3000-01-01";
+			var maxDate = "1970-01-01";
+			for(var i=0;i<item.properties.earthObservation.acquisitionInformation.length;i++) {
+				if (Date.parse(item.properties.earthObservation.acquisitionInformation[i].acquisitionParameter.acquisitionStartTime) < Date.parse(minDate)) {
+					minDate = item.properties.earthObservation.acquisitionInformation[i].acquisitionParameter.acquisitionStartTime;
+				}
+				if (Date.parse(item.properties.earthObservation.acquisitionInformation[i].acquisitionParameter.acquisitionStopTime) > Date.parse(maxDate)) {
+					maxDate = item.properties.earthObservation.acquisitionInformation[i].acquisitionParameter.acquisitionStopTime;
+				}
+			}
+			console.log(minDate+'/'+maxDate);
+			newItem.properties.date = minDate+'/'+maxDate;
+			/*
+				item.properties.earthObservation.acquisitionInformation[0].acquisitionStartTime
+				+'/'
+				+item.properties.earthObservation.acquisitionInformation[0].acquisitionStopTime;
+				*/
+		}
+
+
 		try {
 			var testi = new model(item);
 		} catch (err) {
@@ -51,6 +73,7 @@ exports.mapFromngEO = function(item,dataset,model) {
       var newItem = {
             id: item.properties.EarthObservation.metaDataProperty.EarthObservationMetaData.identifier,
             geometry: item.geometry,
+						type: "Feature",
             properties: {
                   updated: new Date(item.properties.EarthObservation.resultTime.TimeInstant.timePosition),
                   title: item.properties.title,
@@ -183,6 +206,7 @@ exports.mapFromHub = function(item,dataset,model) {
       var newItem = {
             id: indexes["summary"]["Identifier"],
             geometry: itemGeometry,
+						type: "Feature",
             properties: {
                   updated: new Date(indexes["product"]["Ingestion Date"]),
                   title: indexes["summary"]["Identifier"],
@@ -259,6 +283,7 @@ exports.mapFromIndex = function(item,dataset) {
 	      var newItem = {
 	            id: item.productId,
 	            geometry: itemGeometry,
+							type: "Feature",
 	            properties: {
 	                  updated: new Date(item.availabilityTime),
 	                  title: item.productId,
