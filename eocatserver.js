@@ -26,6 +26,7 @@ app.post('/ngEOproducts', products.addProductFromNgEO);
 app.post('/hubProducts', products.addProductFromHub);
 app.put('/products/:id', products.updateProduct);
 app.delete('/products/:id', products.deleteProduct);
+app.get('/describe', products.describe);
 
 if(protocol == 'https') {
   try {

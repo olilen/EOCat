@@ -46,56 +46,57 @@ mongoose.Promise = global.Promise;
 //					- a single acquisition (no productInformation)
 
 var productSchema = mongoose.Schema({
-			id: { type: String,	index: true},
-    	geometry: mongoose.Schema.Types.GeoJSON,
+			type: {$type: String,	default: "Feature", required: true},
+			id: { $type: String,	index: true, required: true, unique: true},
+			geometry: mongoose.Schema.Types.Geometry,
     	properties: {
-    		date: { type: String},
-    		updated: { type: Date, index:true, default: Date.now}, // date when product is made available
-    		title: String,
+    		date: { $type: String},
+    		updated: { $type: Date, index:true, default: Date.now}, // date when product is made available
+    		title: {$type: String},
     		links: {
     			data: [{
-    				href: {type: String},
-						title: {type: String},
-						type: {type: String},
-						length: {type: Number}
+    				href: {$type: String},
+						title: {$type: String},
+						type: {$type: String},
+						length: {$type: Number}
     			}]
     		},
 	    	earthObservation: {
-					parentIdentifier: {type: String},
-					status: {type: String},
+					parentIdentifier: {$type: String, index:true},
+					status: {$type: String},
 	    		acquisitionInformation: [{
 	    			platform: {
-	    				platformShortName: {type: String},
-	    				platformSerialIdentifier: {type: String}
+	    				platformShortName: {$type: String},
+	    				platformSerialIdentifier: {$type: String}
 	    			},
 	    			sensor: {
-	    				instrument: {type: String},
-	    				operationalMode: {type: String},
-	    				polarisationMode: {type: String},
-	            polarisationChannels: {type: String}
+	    				instrument: {$type: String},
+	    				operationalMode: {$type: String},
+	    				polarisationMode: {$type: String},
+	            polarisationChannels: {$type: String}
 	    			},
 	    			acquisitionParameter: {
-	    				acquisitionStartTime: { type: Date, index: true},
-	    				acquisitionStopTime: { type: Date, index: true},
-	    				relativePassNumber: { type: Number},
-	    				orbitNumber: { type: Number},
-	    				startTimeFromAscendingNode: { type: Number},
-	    				stopTimeFromAscendingNode: { type: Number},
-	    				orbitDirection: { type: String}
+	    				acquisitionStartTime: { $type: Date, index: true},
+	    				acquisitionStopTime: { $type: Date, index: true},
+	    				relativePassNumber: { $type: Number},
+	    				orbitNumber: { $type: Number},
+	    				startTimeFromAscendingNode: { $type: Number},
+	    				stopTimeFromAscendingNode: { $type: Number},
+	    				orbitDirection: { $type: String}
 	    			}
 	    		}],
 	    		productInformation: {
-	    			productType: {type: String},
-	    			timeliness: {type: String},
-						size: { type: Number}
+	    			productType: {$type: String},
+	    			timeliness: {$type: String},
+						size: { $type: Number}
 	    		}
 	    	}
 
     	}
-});
+}, { typeKey: '$type' });
 
-//productSchema.index({ 'geometry': '2dsphere' });
-productSchema.path('geometry').index({ type: '2dsphere'});
+productSchema.index({ 'geometry': '2dsphere' });
+//productSchema.path('geometry').index({ type: '2dsphere'});
 
 productSchema.plugin(mongoosePaginate);
 var Product = mongoose.model('Product', productSchema);
@@ -396,7 +397,7 @@ exports.addProduct = function(req, res) {
 	var dataset = req.query.dataset;
 	try {
 		var products = req.body.map(function(a) {return inputFormaters.mapFromEOCat(a,dataset,Product);});
-		console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
+		console.log('Adding '+ req.body.length +' products in dataset "'+req.query.dataset+'"');
 		save(products,Product,"id").then(
 			function(bulkRes){
 				console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
@@ -415,7 +416,7 @@ exports.addProductFromNgEO = function(req, res) {
 	var dataset = req.query.dataset;
 	var products = req.body.map(function(a) {return inputFormaters.mapFromngEO(a,dataset,Product);});
 	//console.log(JSON.stringify(products));
-	console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
+	console.log('Adding '+ req.body.length +' products in dataset "'+req.query.dataset+'"');
 	save(products,Product,"id").then(function(bulkRes){
 	console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
 	res.send({'report':bulkRes});
@@ -425,7 +426,7 @@ exports.addProductFromNgEO = function(req, res) {
 exports.addProductFromHub = function(req, res) {
 	var products = req.body.map(function(a) {return inputFormaters.mapFromHub(a,req.query.dataset,Product);});
 	//console.log(JSON.stringify(products));
-	console.log('Adding '+ req.body.length +' products in dataset '+req.query.dataset);
+	console.log('Adding '+ req.body.length +' products in dataset "'+req.query.dataset+'"');
 
 	save(products,Product,"id").then(function(bulkRes){
 	console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
@@ -463,6 +464,195 @@ exports.deleteProduct = function(req, res) {
                 		res.send(req.body);
             	}
         	});
+}
+
+exports.describe = function(req, res) {
+
+
+	Product.aggregate([
+		[
+			{
+				$facet: {
+					byPlatformSerialIdentifier: [
+						{
+							$group: {
+								_id: {
+									dataset: "$properties.earthObservation.parentIdentifier",
+									//start: "$start",
+									//end: "$end",
+									//count: "$count",
+									platformSerialIdentifier: "$properties.earthObservation.acquisitionInformation.platform.platformSerialIdentifier"
+								},
+								count: { "$sum": 1 },
+								//platformSerialIdentifiers: {$push:{ platformSerialIdentifier: "$platformSerialIdentifier"}}
+							}
+						},
+						{
+							$group: {
+								_id: "$_id.dataset",
+								platformSerialIdentifiers: {$addToSet: {platformSerialIdentifier: "$_id.platformSerialIdentifier", count: "$count"}},
+							}
+						},
+						{
+							$group: {
+								_id: {
+									dataset: "$_id",
+									platformSerialIdentifiers: "$platformSerialIdentifiers",
+								}
+							}
+						},
+					],
+					byProductType: [
+						{
+							$group: {
+								_id: {
+									dataset: "$properties.earthObservation.parentIdentifier",
+									//start: "$start",
+									//end: "$end",
+									//count: "$count",
+									productType: "$properties.earthObservation.productInformation.productType"
+								},
+								count: { "$sum": 1 },
+								//platformSerialIdentifiers: {$push:{ platformSerialIdentifier: "$platformSerialIdentifier"}}
+							}
+						},
+						{
+							$group: {
+								_id: "$_id.dataset",
+								productTypes: {$addToSet: {productType: "$_id.productType", count: "$count"}},
+							}
+						},
+						{
+							$group: {
+								_id: {
+									dataset: "$_id",
+									productTypes: "$productTypes",
+								}
+							}
+						},
+					],
+					byTimeliness: [
+						{
+							$group: {
+								_id: {
+									dataset: "$properties.earthObservation.parentIdentifier",
+									//start: "$start",
+									//end: "$end",
+									//count: "$count",
+									timeliness: "$properties.earthObservation.productInformation.timeliness"
+								},
+								count: { "$sum": 1 },
+							}
+						},
+						{
+							$group: {
+								_id: "$_id.dataset",
+								timelinesses: {$addToSet: {timeliness: "$_id.timeliness", count: "$count"}},
+							}
+						},
+						{
+							$group: {
+								_id: {
+									dataset: "$_id",
+									timelinesses: "$timelinesses",
+								}
+							}
+						},
+					],
+					byDataset: [
+						{
+							$group: {
+								_id: "$properties.earthObservation.parentIdentifier",
+								count: { $sum: 1 },
+								start: { $min: "$properties.earthObservation.acquisitionInformation.acquisitionParameter.acquisitionStartTime" },
+								end: { $max: "$properties.earthObservation.acquisitionInformation.acquisitionParameter.acquisitionStartTime" },
+							}
+						},
+						{$unwind: "$start"},
+						{$unwind: "$end"},
+						{
+							$group: {
+								_id: {
+									dataset: "$_id",
+									count: "$count"
+								},
+								start: { $min: "$start" },
+								end: { $max: "$end" },
+							}
+						},
+						{
+							$group: {
+								_id: "$_id.dataset",
+								stats: {$addToSet: {count: "$_id.count", start: "$start", end: "$end"}},
+							}
+						},
+						{
+							$group: {
+								_id: {
+									dataset: "$_id",
+									stats: "$stats",
+								}
+							}
+						},
+					]
+
+				}
+			},
+			{
+				$group : {
+					_id: { $setUnion: [ "$byPlatformSerialIdentifier", "$byProductType", "$byTimeliness", "$byDataset" ] },
+				}
+			},
+			{$unwind: "$_id"},
+			{
+				$group : {
+					_id: "$_id._id.dataset",
+					productTypes: {$addToSet: "$_id._id.productTypes"},
+					timelinesses: {$addToSet: "$_id._id.timelinesses"},
+					platformSerialIdentifiers: {$addToSet: "$_id._id.platformSerialIdentifiers"},
+					stats: {$addToSet: "$_id._id.stats"},
+				}
+			},
+			{$unwind: "$productTypes"},
+			{$unwind: "$timelinesses"},
+			{$unwind: "$platformSerialIdentifiers"},
+			{$unwind: "$stats"},
+			{
+				$group : {
+					_id: {
+						dataset: "$_id",
+						productTypes: "$productTypes",
+						timelinesses: "$timelinesses",
+						platformSerialIdentifiers: "$platformSerialIdentifiers",
+						count: "$stats.count",
+						start: "$stats.start",
+						end: "$stats.end",
+					}
+				}
+			},
+			{$unwind: "$_id.start"},
+			{$unwind: "$_id.end"},
+			{$unwind: "$_id.start"},
+			{$unwind: "$_id.end"},
+			{$unwind: "$_id.count"},
+		]
+	],
+	function(err,result) {
+		if (err) {
+			res.send({'error':'Description failed - ' + err});
+		} else {
+			var description = [];
+			for(var i=0;i<result.length;i++) {
+				console.log(result[i]._id.dataset)
+				description.push(result[i]._id);
+			}
+
+			res.send({datasets: description});
+			//res.send(result);
+	 	}
+	}
+	);
+
 }
 
 exports.harvestOADS = function(req, res) {
