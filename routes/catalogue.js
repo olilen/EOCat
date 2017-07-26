@@ -13,12 +13,30 @@ var inputFormaters = require("./inputFormaters");
 var rangeCriteria = require("./openSearchEORangeCriteria");
 
 //var converter = new Converter({delimiter: "\t"});
-
-
-
-mongoose.connect('localhost',"products", 27017);
 // Use native promises
 mongoose.Promise = global.Promise;
+
+
+var promise = mongoose.connect('mongodb://localhost:27017/products', {
+  useMongoClient: true,
+  /* other options */
+});
+//mongoose.connect('localhost',"products", 27017);
+promise.then(function(db) {
+
+	db.on('error', function() {
+		console.log('EOCat could not connect to mongo database via port 27017. Stopping...');
+		process.exit(1);
+	});
+	db.once('open', function() {
+	 	console.log("EOCat connected to mongo database via port 27017");
+	 	Product.count({ }, function (err, count) {
+	  		console.log('🌍🛰'+'\tFound %d products in the catalogue.', count);
+
+		});
+	});
+});
+
 
 
 
@@ -102,18 +120,7 @@ productSchema.plugin(mongoosePaginate);
 var Product = mongoose.model('Product', productSchema);
 
 
-var db = mongoose.connection;
-db.on('error', function() {
-	console.log('EOCat could not connect to mongo database via port 27017. Stopping...');
-	process.exit(1);
-});
-db.once('open', function() {
- 	console.log("EOCat connected to mongo database via port 27017");
- 	Product.count({ }, function (err, count) {
-  		console.log('🌍🛰'+'\tFound %d products in the catalogue.', count);
 
-	});
-});
 
 
 exports.search = function(req, res) {

@@ -74,7 +74,7 @@ case "$oper" in
     fi
     echo "Starting mongodb..."
     mongod --config ./conf/mongod.conf &
-    echo "Starting EoCat..."
+    echo "Starting EOCat..."
     node eocatserver.js $prot $port &
     sleep 5  # Give some time to server to start mongodb and establish connection with it
     open "$prot://$myIP:$port/*/search?format=eocat&count=200&startIndex=1"
@@ -83,7 +83,7 @@ case "$oper" in
     if [ ! -z "$status" ]; then
       echo "Found EOCat server running with pid $status. Will now stop it."
       kill "$status"
-      echo "EoCat server stopped."
+      echo "EOCat server stopped."
     else
       echo "Couldn't find a running EOCat server"
     fi

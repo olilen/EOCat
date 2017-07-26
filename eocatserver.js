@@ -31,13 +31,14 @@ app.get('/describe', products.describe);
 if(protocol == 'https') {
   try {
     var credentials = {
-        key: fs.readFileSync('./ssl/server.key'),
-        cert: fs.readFileSync('./ssl/server.crt'),
+        key: fs.readFileSync('./ssl/key.pem'),
+        cert: fs.readFileSync('./ssl/cert.pem'),
         rejectUnauthorized: false
     };
   }
   catch (err) {
-    console.log("Could not read the server key or certificate in the ./ssl folder.");
+    console.log("ERROR: EOCat server not started (Could not read the server key or certificate in the ./ssl folder)");
+    process.exit(1);
   }
   https.createServer(credentials, app).listen(port, function() {console.log("EOCat "+version+" is listening HTTPS on port "+port+"...");});
 } else {
