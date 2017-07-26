@@ -1,5 +1,6 @@
 data*/
 log/
+ssl/
 *.zip
 node_modules/
 .DS_Store
