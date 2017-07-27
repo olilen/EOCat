@@ -11,7 +11,7 @@ var Converter = require("csvtojson").Converter;
 var outputFormaters = require("./outputFormaters");
 var inputFormaters = require("./inputFormaters");
 var rangeCriteria = require("./openSearchEORangeCriteria");
-var odata = require("odata-v4-mongod");
+var createFilter = require('odata-v4-mongodb').createFilter;
 
 //var converter = new Converter({delimiter: "\t"});
 // Use native promises
@@ -661,6 +661,17 @@ exports.describe = function(req, res) {
 	}
 	);
 
+}
+
+exports.odata = function(req, res) {
+	var filter = createFilter(req.query.$filter);
+	// collection instance from MongoDB Node.JS Driver
+	Product.find(filter, function(err, data){
+			res.json({
+				'@odata.context': req.protocol + '://' + req.get('host') + '/api/$metadata#products',
+				value: data
+			});
+	});
 }
 
 exports.harvestOADS = function(req, res) {

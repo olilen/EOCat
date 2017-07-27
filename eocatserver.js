@@ -19,6 +19,7 @@ app.use(express.static('public'));
 
 //app.get('/products', products.findAll);
 app.get('/:dataset/search', products.search);
+app.get('/odata', products.odata);
 app.get('/harvestOADS', products.harvestOADS);
 app.get('/products/:id', products.findById);
 app.post('/products', products.addProduct);
