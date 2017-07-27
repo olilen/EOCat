@@ -11,6 +11,7 @@ var Converter = require("csvtojson").Converter;
 var outputFormaters = require("./outputFormaters");
 var inputFormaters = require("./inputFormaters");
 var rangeCriteria = require("./openSearchEORangeCriteria");
+var odata = require("odata-v4-mongodb");
 
 //var converter = new Converter({delimiter: "\t"});
 // Use native promises
