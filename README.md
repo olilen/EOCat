@@ -5,5 +5,5 @@ EOCat supports product search requests compliant with the â€œOpenSearch for EOâ€
 
 For set-up instructions, read INSTALL.
 
-Web Site: https://olilen.github.io/EOCat/
+Web Site: https://obarois.github.io/EOCat-v1/
 
