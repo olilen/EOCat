@@ -1,3 +1,3 @@
 #WEB Site for EOCat
 
-https://olilen.github.io/EOCat/
+https://obarois.github.io/EOCat-v1/
