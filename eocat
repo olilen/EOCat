@@ -77,7 +77,8 @@ case "$oper" in
     echo "Starting EOCat..."
     node eocatserver.js $prot $port &
     sleep 5  # Give some time to server to start mongodb and establish connection with it
-    open "$prot://$myIP:$port/*/search?format=eocat&count=200&startIndex=1"
+    #open "$prot://$myIP:$port/*/search?format=eocat&count=200&startIndex=1"
+    open "$prot://$myIP:$port"
     ;;
   Stop)
     if [ ! -z "$status" ]; then

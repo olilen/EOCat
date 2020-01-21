@@ -3,19 +3,22 @@ var GeoJSON = require('mongoose-geojson-schema');
 var mongoosePaginate = require('mongoose-paginate');
 var wkt = require('wellknown');
 var https = require('https');
-var request = require('request');
-var url = require('url');
+var request = require('request-promise');
+var cheerio = require('cheerio');
+const {URL, URLSearchParams} = require('url');
 var htmlparser = require('htmlparser2');
 var AdmZip = require('adm-zip');
 var Converter = require("csvtojson").Converter;
 var outputFormaters = require("./outputFormaters");
 var inputFormaters = require("./inputFormaters");
 var rangeCriteria = require("./openSearchEORangeCriteria");
-var createFilter = require('odata-v4-mongodb').createFilter;
+var odata = require('odata-v4-mongodb');
+var Promise = require("bluebird");
+//var parse = require('url-parse')
 
 //var converter = new Converter({delimiter: "\t"});
 // Use native promises
-mongoose.Promise = global.Promise;
+mongoose.Promise = Promise;
 
 
 var promise = mongoose.connect('mongodb://localhost:27017/products', {
@@ -440,9 +443,9 @@ exports.addProductFromHub = function(req, res) {
 	console.log("Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
 	res.send({'report':bulkRes});
 	});
-
-
 }
+
+
 
 
 exports.updateProduct = function(req, res) {
@@ -663,15 +666,198 @@ exports.describe = function(req, res) {
 
 }
 
+exports.odata2 = function(req, res) {
+	try {
+		var query = odata.createQuery(req.query);
+
+		console.log(query);
+		console.log(query.limit);
+
+
+		Product.find(
+        query.query,
+        query.projection,
+        query.skip,
+        query.limit
+    ).exec(function(err, result) {
+			if (!err) {
+				var response
+				console.log("format: "+format);
+				switch (format) {
+					case "eocat":
+						response = {
+							type: "FeatureCollection",
+							properties: {
+								title: "EOCat search response (features as stored natively in EOCat database)",
+								updated: new Date(),
+								totalResults: result.total.toString(),
+								startIndex: (result.offset)?result.offset:1,
+								itemsPerPage: result.limit.toString(),
+							},
+							//features: result.docs.map(outputFormaters.nativeFormat)
+							features: result.docs.map(function(a) {return outputFormaters.nativeFormat(a,Product);})
+						};
+						break;
+					case "ngeo":
+					case "json":
+						response = {
+							type: "FeatureCollection",
+							id: req.url,
+							properties: {
+								totalResults: result.total.toString(),
+								startIndex: (result.offset)?result.offset:1,
+								itemsPerPage: result.limit.toString(),
+								title: "EOCat search response (simulating ngEO)",
+								updated: new Date()
+							},
+							features: result.docs.map(function(a) {return outputFormaters.ngeoFormat(a,Product);}),
+						};
+						break;
+					case "owc":
+					default:
+						response = {
+							type: "FeatureCollection",
+							id: req.url,
+							properties: {
+								totalResults: result.total.toString(),
+								startIndex: (result.offset)?result.offset:1,
+								itemsPerPage: result.limit.toString(),
+								links: {
+									profiles: [{
+										href: "http://www.opengis.net/spec/owc-geojson/1.0/req/core",
+										title: "This file is compliant with version 1.0 of OGC Context"
+									}]
+								},
+								lang: "en",
+								title: "EOCat search response (as a geojson OWS Context)",
+								updated: new Date()
+							},
+							features: result.docs.map(function(a) {return outputFormaters.owcFormat(a,Product);}),
+						};
+						break;
+				}
+
+
+				res.send(response);
+			} else {
+				res.send( err);
+			}
+		});
+
+
+
+
+
+		//res.send({filter: filter});
+	}
+	catch (err) {
+		console.log("ERROR: Cannot create odata filter");
+		res.send({'error':'Cannot create odata filter - ' + err});
+	}
+
+}
+
+
+
 exports.odata = function(req, res) {
-	var filter = createFilter(req.query.$filter);
-	// collection instance from MongoDB Node.JS Driver
-	Product.find(filter, function(err, data){
-			res.json({
-				'@odata.context': req.protocol + '://' + req.get('host') + '/api/$metadata#products',
-				value: data
-			});
-	});
+	try {
+		var filter = odata.createFilter(req.query.$filter);
+		console.log("filter: ");
+		console.log(filter);
+		console.log("req: ");
+		console.log(req);
+
+		/*
+		Product.find(filter, function(err, data){
+				res.json({
+					'@odata.context': req.protocol + '://' + req.get('host') + '/odata/$metadata#products',
+					value: data
+				});
+		});
+		*/
+
+		var offset = (req.query.$skip)?parseInt(req.query.$skip):0;
+		var sorting = "desc";
+		var limit = (req.query.$top)?parseInt(req.query.$top):100;
+		var format = req.query.$format;
+		//var orderby = (req.query.$orderby)?req.query.$orderby:'desc';
+
+		Product.paginate(filter, { sort: {'properties.start': 'desc'}, offset: offset, limit: limit }, function(err, result) {
+			if (!err) {
+				var response
+				console.log("format: "+format);
+				switch (format) {
+					case "eocat":
+						response = {
+							type: "FeatureCollection",
+							properties: {
+								title: "EOCat search response (features as stored natively in EOCat database)",
+								updated: new Date(),
+								totalResults: result.total.toString(),
+								startIndex: (result.offset)?result.offset:1,
+								itemsPerPage: result.limit.toString(),
+							},
+							//features: result.docs.map(outputFormaters.nativeFormat)
+							features: result.docs.map(function(a) {return outputFormaters.nativeFormat(a,Product);})
+						};
+						break;
+					case "ngeo":
+					case "json":
+						response = {
+							type: "FeatureCollection",
+							id: req.url,
+							properties: {
+								totalResults: result.total.toString(),
+								startIndex: (result.offset)?result.offset:1,
+								itemsPerPage: result.limit.toString(),
+								title: "EOCat search response (simulating ngEO)",
+								updated: new Date()
+							},
+							features: result.docs.map(function(a) {return outputFormaters.ngeoFormat(a,Product);}),
+						};
+						break;
+					case "owc":
+					default:
+						response = {
+							type: "FeatureCollection",
+							id: req.url,
+							properties: {
+								totalResults: result.total.toString(),
+								startIndex: (result.offset)?result.offset:1,
+								itemsPerPage: result.limit.toString(),
+								links: {
+									profiles: [{
+										href: "http://www.opengis.net/spec/owc-geojson/1.0/req/core",
+										title: "This file is compliant with version 1.0 of OGC Context"
+									}]
+								},
+								lang: "en",
+								title: "EOCat search response (as a geojson OWS Context)",
+								updated: new Date()
+							},
+							features: result.docs.map(function(a) {return outputFormaters.owcFormat(a,Product);}),
+						};
+						break;
+				}
+
+
+				res.send(response);
+			} else {
+				res.send( err);
+			}
+		});
+
+
+
+
+
+		//res.send({filter: filter});
+	}
+	catch (err) {
+		console.log("ERROR: Cannot create odata filter");
+		res.send({'error':'Cannot create odata filter - ' + err});
+	}
+
 }
 
 exports.harvestOADS = function(req, res) {
@@ -750,4 +936,123 @@ var processIndexFilesRecusively = function(dataset,baseUrl,indexFileList,cursor)
 		}
 	);
 
+}
+
+
+exports.harvestDHUS = async function(ws, req) {
+	var csvArray = [];
+	
+	if(req.query.url) {
+		console.log("Base URL for Harvesting: "+req.query.url);
+		var csvArray = await recursiveGetCsv(req.query.url,ws);
+
+		console.log("Found " + csvArray.length + " CSV file to harvest.");
+		ws.send("Found " + csvArray.length + " CSV file to harvest.");
+		
+		//ws.send("First csv: "+csvArray[0]);
+
+	} else {
+		ws.send("Please provide a URL !");
+		ws.close();
+	
+	}
+}
+
+async function getHTTPDir(url,ws) {
+	var linksArray = [];
+	
+	//console.log("Url: "+url);
+	await request(
+		{
+			uri: url,
+			transform: function (body) {
+				return cheerio.load(body);
+			}
+		}
+		)
+	.then(
+		function ($) {
+
+			$("a").each(function ()	{
+				
+				if(!this.attribs.href.includes("?") && this.attribs.href[0] != '/' && !url.includes(this.attribs.href)) {
+					ws.send(this.attribs.href);
+					linksArray.push(this.attribs.href);
+				}
+			});
+			
+		}
+	)
+	.catch(function (error) {
+		console.log('Error contacting server: ', error);
+	});
+
+	return linksArray;
+	
+}
+
+async function recursiveGetCsv(url,ws) {
+	let links = await getHTTPDir(url,ws);
+	let csvArray = links.map(link => {
+		return !link.includes(".csv") ? recursiveGetCsv(url+"/"+link,ws) : url+"/"+link;
+	});
+	return Array.prototype.concat(...(await Promise.all(csvArray)));
+}
+	
+
+exports.harvestDHUSQuery = async function(ws, req) {
+	
+	let result = {};
+	try {
+		let parsedUrl = new URL(req.query.url);
+		let statusMessage = "";
+		let offset = parseInt(parsedUrl.searchParams.get('start'))?parseInt(parsedUrl.searchParams.get('start')):0;
+		let rows = parseInt(parsedUrl.searchParams.get('rows'))?parseInt(parsedUrl.searchParams.get('rows')):100;
+		do {
+			parsedUrl.searchParams.set('start', offset);
+			parsedUrl.searchParams.set('rows', rows);
+			console.log("Search url:"+parsedUrl.href);
+			result = await getDHUSQuery(parsedUrl.href,ws);
+			statusMessage = offset + " to " 
+				+ (offset+rows<result.feed["opensearch:totalResults"]?offset+rows:result.feed["opensearch:totalResults"]) 
+				+ " of " + result.feed["opensearch:totalResults"]
+				+ ":  " + result.feed.entry.length + " items to ingest";
+			ws.send(statusMessage);
+			var products = result.feed.entry.map(function(a) {return inputFormaters.mapFromHubOpenSearch(a,req.query.dataset,Product);});
+
+			save(products,Product,"id").then(function(bulkRes){
+				ws.send(statusMessage + "    ====> Bulk complete: Updated: "+bulkRes.nModified+"  Inserted: "+bulkRes.nUpserted);
+			});
+
+			offset += rows;
+			
+		}
+		while (offset < result.feed["opensearch:totalResults"]);
+	}
+	catch (err) {
+		ws.send("Harvesting Error: "+err.message);
+	}
+
+}
+
+async function getDHUSQuery(url,ws) {
+	var entries = [];
+	await request(
+		{
+			uri: url,
+			json: true
+		}
+	)
+	.then(
+		function (result) {
+			
+			entries = result;
+		}
+	)
+	.catch(
+		function (error) {
+			console.log('Error contacting server: ', error.message);
+		}
+	);
+	return entries;
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+    <link rel="stylesheet" href="css/eocat.css" type="text/css" />
+
+   <head>
+	
+      <script type="text/javascript">
+
+        function harvestDHUSQuery() {
+            var harvestWebSocketURL = ((window.location.protocol === 'https:')?'wss':'ws') + "://"+ window.location.hostname + ":" + window.location.port + "/harvestDHUSQuery?url="  + encodeURIComponent(document.getElementById("baseurl").value + document.getElementById("harvestQueryURL").value);
+            var domResponse = document.getElementById("responseHarvestDHUSQuery")
+            harvest(harvestWebSocketURL,domResponse);
+        }
+
+
+         function harvest(harvestWebSocketURL,domResponse)
+         {
+            if ("WebSocket" in window)
+            {
+                //var harvestWebSocketURL = "ws://"+ window.location.hostname + ":" + window.location.port + "/harvestDHUS?url=" + document.getElementById("harvestURL").value;
+                console.log("Harvest Web Socket URL: "+harvestWebSocketURL);
+               // Let us open a web socket 
+               // e.g. "ws://131.176.133.180:3000/harvestDHUS?url=https://scihub.copernicus.eu/catalogueview"
+               var ws = new WebSocket(harvestWebSocketURL);
+				
+               ws.onopen = function()
+               {
+                  // Web Socket is connected, send data using send()
+                  ws.send("Message to send");
+                  console.log("Message is sent...");
+               };
+				
+               ws.onmessage = function (evt) 
+               { 
+                  //var received_msg = evt.data;
+                  //console.log(evt.data);
+                  domResponse.innerHTML = evt.data+"<br>";
+               };
+				
+               ws.onclose = function()
+               { 
+                  // websocket is closed.
+                  console.log("Connection is closed..."); 
+               };
+					
+               window.onbeforeunload = function(event) {
+                  ws.close();
+               };
+            }
+            
+            else
+            {
+               // The browser doesn't support WebSocket
+               alert("WebSocket NOT supported by your Browser!");
+            }
+         }
+      </script>
+		
+   </head>
+
+
+    </style>
+    
+    <body>
+        <h1>EO-Cat Admin</h1>
+        <div id="instruction">
+Enter a valid open search URL to find products on ESA's Sentinel DataHub (https://username:password@scihub.copernicus.eu/apihub/search?q=....)
+<p>&nbsp;</p>
+Products found will be ingested in the EOCat database automatically, page after page. Existing entries are replaced.
+        </div>
+        <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+        
+        <div id="harvestQuery">
+
+            <form action="javascript:harvestDHUSQuery()" width="80%">
+                Base URL:
+                <br />
+                <input type "text" id="baseurl" value="https://user:password@scihub.copernicus.eu/apihub/search?" style="width: 80%;"/>
+                <br />
+                Search Parameters:
+                <br />
+                <input type="text" list="searchURLs" name="harvestQueryURL" id="harvestQueryURL" placeholder="Select a template..." style="width: 80%; height: 50px; word-wrap: break-word; word-break: break-word;">
+                    <datalist id="searchURLs">
+                        <option value='q=footprint: "Intersects(POLYGON((20.3 54.6,20.6 54.6,20.6 54.7,20.3 54.7,20.3 54.6)))" AND platformname:Sentinel-2 AND producttype:S2MSI1C&sortedby=beginposition&order=desc&format=json'>
+                        <option value='q=(beginposition:[2020-01-13T00:00:00.000Z TO 2020-01-13T23:59:59.000Z] AND platformname:Sentinel-1 AND producttype:GRD)&sortedby=beginposition&order=desc&format=json'>
+                    </datalist>
+                    <br /><br />
+                <input type="submit" value = "Harvest">
+                </form>
+                
+                
+        </div>
+        <br />
+        <div id="responseHarvestDHUSQuery" class="responseHarvestDHUSQuery"> </div>
+
+        </body>
+</html>
