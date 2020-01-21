@@ -1,8 +1,12 @@
-// 4 Formaters functions for decoding the inputs for insertion/updates:
+// 5 Formaters functions for decoding the inputs for insertion/updates:
 // 		mapItem(): for items provided in native format (i.e. conformant with the EOCat product schema)
 //		mapFromngEO: for items returned from ngEO catalogue (via ngEO Web server, i.e. in "geojson")
-//		mapFromHub: for items returned from a search on the Copernicus SciHub (non-standard/ad-hoc json)
+//		mapFromHub: for items returned from a search on the Copernicus API Stub, as done by the dHuS Web Client (non-standard/ad-hoc json)
+//		mapFromHubOpenSearch: for items returned from a OpenSearch on the Copernicus  API Hub (non-standard/ad-hoc json)
 //		mapFromOADS: for items listed in the OADS index files
+
+var wkt = require('wellknown');
+
 exports.mapFromEOCat = function(item,dataset,model) {
 	try {
 		var newItem = item;
@@ -255,6 +259,116 @@ exports.mapFromHub = function(item,dataset,model) {
 			return null;
 		}
 }
+
+exports.mapFromHubOpenSearch = function(item,dataset,model) {
+	
+	function reshuffle(array) {
+		let json = {};
+		for(let i=0; i < array.length; i++) {
+			json[array[i].name] =  array[i].content;
+		}
+		return json;
+	}
+
+	try {
+		let hubItem = {};
+		if(item.date) Object.assign(hubItem,reshuffle(item.date));
+		if(item.int) Object.assign(hubItem,reshuffle(item.int));
+		if(item.double) Object.assign(hubItem,reshuffle(item.double));
+		if(item.str) Object.assign(hubItem,reshuffle(item.str));
+
+		if(!dataset) {
+			dataset = "dhus_"
+				+ hubItem.platformserialidentifier
+				+ "_" + hubItem.instrumentshortname
+				+ "_" + hubItem.sensoroperationalmode;
+			}
+
+		var sizeArray = hubItem.size.split(" ");
+		var sizeInBytes;
+		switch (sizeArray[1]) {
+			case "B":
+				sizeInBytes = Math.round(parseFloat(sizeArray[0]));
+				break;
+			case "MB":
+				sizeInBytes = Math.round(parseFloat(sizeArray[0])*1024);
+				break;
+			case "GB":
+				sizeInBytes = Math.round(parseFloat(sizeArray[0])*1024*1024);
+				break;
+			case "TB":
+				sizeInBytes = Math.round(parseFloat(sizeArray[0])*1024*1024*1024);
+				break;
+		}
+		
+
+		var newItem = {
+			id: item.title,
+			geometry: wkt(hubItem.footprint),
+			type: "Feature",
+			properties: {
+				updated: new Date(hubItem.ingestiondate),
+				title: item.title,
+				date: hubItem.beginposition  +'/'+  hubItem.endposition,
+				links: {
+					data: [{
+						href: item.link[0].href,
+					}]
+				},
+				earthObservation: {
+					parentIdentifier: dataset,
+					status: "ARCHIVED",
+					acquisitionInformation: [{
+						platform: {
+							platformShortName: hubItem.platformname,
+							platformSerialIdentifier: hubItem.platformserialidentifier
+						},
+						sensor: {
+							instrument: hubItem.instrumentshortname,
+							operationalMode: hubItem.sensoroperationalmode
+						},
+						acquisitionParameter: {
+							acquisitionStartTime: new Date(hubItem.beginposition),
+							acquisitionStopTime: new Date(hubItem.endposition),
+							relativePassNumber: parseInt(hubItem.relativeorbitnumber),
+							orbitNumber: parseInt(hubItem.orbitnumber),
+							startTimeFromAscendingNode: null,
+							stopTimeFromAscendingNode: null,
+							orbitDirection: hubItem.orbitdirection
+
+						}
+					}],
+					productInformation: {
+						productType: hubItem.producttype,
+						//timeliness: indexes["product"]["Timeliness Category"],
+						size: sizeInBytes
+					}
+				}
+			}
+		};
+
+		console.log("item: "+JSON.stringify(newItem));
+
+		try {
+			var testi = new model(newItem);
+		} catch (err) {
+			throw(err);
+		}
+
+		var testio = testi.toObject();
+		//console.log(testio.properties.start);
+		delete testio._id;
+		//newItem.properties.start  = new Date(item.properties.start);
+		//newItem.properties.stop  = new Date(item.properties.stop);
+		return testio;
+	} catch (err) {
+		console.log("error: "+err.message);
+		return null;
+	}
+}
+
+
+
 
 exports.mapFromIndex = function(item,dataset) {
 

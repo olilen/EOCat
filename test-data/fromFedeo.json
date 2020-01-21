@@ -1,0 +1,964 @@
+{
+  "type" : "FeatureCollection",
+  "id" : "http://geo.spacebel.be/opensearch/request?parentIdentifier=LANDSAT.ETM.GTC&startDate=2000-01-01T00:00:00Z&endDate=2000-01-31T00:00:00Z&cloudCover=10%5D&httpAccept=application/geo%2Bjson",
+  "totalResults" : 1329,
+  "startIndex" : 1,
+  "itemsPerPage" : 10,
+  "queries" : {
+    "request" : [ {
+      "eo:cloudCover" : "10]",
+      "eo:parentIdentifier" : "LANDSAT.ETM.GTC",
+      "sru:recordSchema" : "server-choice",
+      "time:end" : "2000-01-31T00:00:00Z",
+      "time:start" : "2000-01-01T00:00:00Z"
+    } ]
+  },
+  "properties" : {
+    "title" : "FEDEO Clearinghouse - Search Response",
+    "creator" : "FEDEO Clearinghouse",
+    "authors" : [ {
+      "type" : "Agent",
+      "name" : "FEDEO Clearinghouse",
+      "email" : "eohelp@eo.esa.int"
+    } ],
+    "updated" : "2018-02-21T09:43:38Z",
+    "lang" : "en",
+    "rights" : "Copyright 2016-2018, European Space Agency",
+    "links" : {
+      "profiles" : [ {
+        "href" : "http://www.opengis.net/spec/owc-geojson/1.0/req/core"
+      } ],
+      "first" : [ {
+        "href" : "http://geo.spacebel.be/opensearch/request?parentIdentifier=LANDSAT.ETM.GTC&startDate=2000-01-01T00:00:00Z&endDate=2000-01-31T00:00:00Z&cloudCover=10%5D&httpAccept=application/geo%2Bjson&startRecord=1",
+        "type" : "application/geo+json",
+        "title" : "first results"
+      } ],
+      "next" : [ {
+        "href" : "http://geo.spacebel.be/opensearch/request?parentIdentifier=LANDSAT.ETM.GTC&startDate=2000-01-01T00:00:00Z&endDate=2000-01-31T00:00:00Z&cloudCover=10%5D&httpAccept=application/geo%2Bjson&startRecord=11",
+        "type" : "application/geo+json",
+        "title" : "next results"
+      } ],
+      "last" : [ {
+        "href" : "http://geo.spacebel.be/opensearch/request?parentIdentifier=LANDSAT.ETM.GTC&startDate=2000-01-01T00:00:00Z&endDate=2000-01-31T00:00:00Z&cloudCover=10%5D&httpAccept=application/geo%2Bjson&startRecord=1321",
+        "type" : "application/geo+json",
+        "title" : "last results"
+      } ],
+      "search" : [ {
+        "href" : "http://geo.spacebel.be/opensearch/description.xml?parentIdentifier=LANDSAT.ETM.GTC",
+        "type" : "application/opensearchdescription+xml",
+        "title" : "search"
+      } ]
+    }
+  },
+  "features" : [ {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199",
+    "bbox" : [ -19.2047, 63.136, -14.0659, 65.2798 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ -19.2047, 65.224 ], [ -18.8994, 63.136 ], [ -14.134, 63.187 ], [ -14.0659, 65.2798 ], [ -19.2047, 65.224 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199",
+      "title" : "LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199",
+      "productId" : "LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199",
+      "date" : "2000-01-27T12:20:15Z/2000-01-27T12:20:44Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T122015_20000127T122044_004178_0217_0015_1199.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T12:20:15Z",
+          "endingDateTime" : "2000-01-27T12:20:44Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4178,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "217",
+          "wrsLatitudeGrid" : "15"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 187534974,
+        "availabilityTime" : "2000-01-27T12:20:44Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 4,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B",
+    "bbox" : [ -18.0561, 64.5179, -12.64, 66.6188 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ -18.0561, 66.6068 ], [ -17.8204, 64.5179 ], [ -12.8221, 64.5288 ], [ -12.64, 66.6188 ], [ -18.0561, 66.6068 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B",
+      "title" : "LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B",
+      "productId" : "LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B",
+      "date" : "2000-01-27T12:19:51Z/2000-01-27T12:20:20Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T121951_20000127T122020_004178_0217_0014_B97B.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T12:19:51Z",
+          "endingDateTime" : "2000-01-27T12:20:20Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4178,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "217",
+          "wrsLatitudeGrid" : "14"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 197519073,
+        "availabilityTime" : "2000-01-27T12:20:20Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 10,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A",
+    "bbox" : [ -2.81158, 46.4667, 0.184584, 48.4165 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ -2.80463, 48.4165 ], [ -2.81158, 46.5078 ], [ 0.0715731, 46.4667 ], [ 0.184584, 48.3726 ], [ -2.80463, 48.4165 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A",
+      "title" : "LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A",
+      "productId" : "LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A",
+      "date" : "2000-01-27T10:46:09Z/2000-01-27T10:46:37Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T104609_20000127T104637_004177_0201_0027_AF1A.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T10:46:09Z",
+          "endingDateTime" : "2000-01-27T10:46:37Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4177,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "201",
+          "wrsLatitudeGrid" : "27"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 224663988,
+        "availabilityTime" : "2000-01-27T10:46:37Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 1,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B",
+    "bbox" : [ 51.579, 57.6716, 55.6348, 59.7137 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ 51.6126, 59.7137 ], [ 51.579, 57.7462 ], [ 55.3813, 57.6716 ], [ 55.6348, 59.6332 ], [ 51.6126, 59.7137 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B",
+      "title" : "LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B",
+      "productId" : "LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B",
+      "date" : "2000-01-27T07:25:11Z/2000-01-27T07:25:40Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T072511_20000127T072540_004175_0169_0019_E71B.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T07:25:11Z",
+          "endingDateTime" : "2000-01-27T07:25:40Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4175,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "169",
+          "wrsLatitudeGrid" : "19"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 242044267,
+        "availabilityTime" : "2000-01-27T07:25:40Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 1,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185",
+    "bbox" : [ -7.19008, 32.1859, -4.7246, 34.1607 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ -7.19008, 34.1018 ], [ -7.09983, 32.1859 ], [ -4.7246, 32.2406 ], [ -4.76267, 34.1607 ], [ -7.19008, 34.1018 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185",
+      "title" : "LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185",
+      "productId" : "LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185",
+      "date" : "2000-01-27T10:50:07Z/2000-01-27T10:50:36Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RMPS_ETM_GTC_1P_20000127T105007_20000127T105036_004177_0201_0037_C185.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T10:50:07Z",
+          "endingDateTime" : "2000-01-27T10:50:36Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4177,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "201",
+          "wrsLatitudeGrid" : "37"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 283602570,
+        "availabilityTime" : "2000-01-27T10:50:36Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 1,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0",
+    "bbox" : [ 55.0743, 63.1697, 60.1347, 65.2459 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ 55.0743, 65.2459 ], [ 55.2122, 63.1883 ], [ 59.9104, 63.1697 ], [ 60.1347, 65.2255 ], [ 55.0743, 65.2459 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0",
+      "title" : "LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0",
+      "productId" : "LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0",
+      "date" : "2000-01-27T07:23:36Z/2000-01-27T07:24:05Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RKSE_ETM_GTC_1P_20000127T072336_20000127T072405_004175_0169_0015_3DA0.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T07:23:36Z",
+          "endingDateTime" : "2000-01-27T07:24:05Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4175,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "169",
+          "wrsLatitudeGrid" : "15"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 178635006,
+        "availabilityTime" : "2000-01-27T07:24:05Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 5,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B",
+    "bbox" : [ 50.0976, 54.9011, 53.8365, 56.8985 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ 50.0976, 56.8985 ], [ 50.1422, 54.928 ], [ 53.6963, 54.9011 ], [ 53.8365, 56.8696 ], [ 50.0976, 56.8985 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B",
+      "title" : "LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B",
+      "productId" : "LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B",
+      "date" : "2000-01-27T07:25:59Z/2000-01-27T07:26:28Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RNSG_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_4B1B.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T07:25:59Z",
+          "endingDateTime" : "2000-01-27T07:26:28Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4175,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "169",
+          "wrsLatitudeGrid" : "21"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 253421097,
+        "availabilityTime" : "2000-01-27T07:26:28Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 1,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD",
+    "bbox" : [ 30.3128, 63.1712, 35.403, 65.2444 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ 30.3128, 65.2396 ], [ 30.5062, 63.1712 ], [ 35.23, 63.1755 ], [ 35.403, 65.2444 ], [ 30.3128, 65.2396 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD",
+      "title" : "LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD",
+      "productId" : "LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD",
+      "date" : "2000-01-27T09:02:29Z/2000-01-27T09:02:58Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RKSE_ETM_GTC_1P_20000127T090229_20000127T090258_004176_0185_0015_5DBD.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T09:02:29Z",
+          "endingDateTime" : "2000-01-27T09:02:58Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4176,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "185",
+          "wrsLatitudeGrid" : "15"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 211830398,
+        "availabilityTime" : "2000-01-27T09:02:58Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 4,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB",
+    "bbox" : [ -6.80954, 33.622, -4.30826, 35.5923 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ -6.80954, 35.5395 ], [ -6.72291, 33.622 ], [ -4.30826, 33.6712 ], [ -4.33878, 35.5923 ], [ -6.80954, 35.5395 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB",
+      "title" : "LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB",
+      "productId" : "LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB",
+      "date" : "2000-01-27T10:49:44Z/2000-01-27T10:50:12Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RMPS_ETM_GTC_1P_20000127T104944_20000127T105012_004177_0201_0036_C5CB.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T10:49:44Z",
+          "endingDateTime" : "2000-01-27T10:50:12Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4177,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "201",
+          "wrsLatitudeGrid" : "36"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 276473157,
+        "availabilityTime" : "2000-01-27T10:50:12Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 3,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  }, {
+    "type" : "Feature",
+    "id" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/geo%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3",
+    "bbox" : [ 50.0995, 54.9011, 53.8365, 56.8996 ],
+    "geometry" : {
+      "type" : "Polygon",
+      "coordinates" : [ [ [ 50.0995, 56.8996 ], [ 50.1441, 54.9281 ], [ 53.6963, 54.9011 ], [ 53.8365, 56.8706 ], [ 50.0995, 56.8996 ] ] ]
+    },
+    "properties" : {
+      "status" : "ARCHIVED",
+      "parentIdentifier" : "LANDSAT.ETM.GTC",
+      "identifier" : "LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3",
+      "title" : "LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3",
+      "productId" : "LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3",
+      "date" : "2000-01-27T07:25:59Z/2000-01-27T07:26:28Z",
+      "updated" : "2018-02-21T09:43:16Z",
+      "links" : {
+        "alternates" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3&recordSchema=server-choice",
+          "type" : "application/atom+xml",
+          "title" : "Atom format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3&recordSchema=om10",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.0",
+          "title" : "O&M metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/gml%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3&recordSchema=om",
+          "type" : "application/gml+xml;profile=http://www.opengis.net/spec/EOMPOM/1.1",
+          "title" : "O&M 1.1 metadata"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/rdf%2Bxml&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3&recordSchema=server-choice",
+          "type" : "application/rdf+xml",
+          "title" : "RDF/XML format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/ld%2Bjson&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3&recordSchema=server-choice",
+          "type" : "application/ld+json",
+          "title" : "JSON-LD format"
+        }, {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=text/turtle&parentIdentifier=LANDSAT.ETM.GTC&uid=LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3&recordSchema=server-choice",
+          "type" : "text/turtle",
+          "title" : "Turtle format"
+        } ],
+        "data" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/products/LANDSAT_ETM/2000/01/27/LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3.ZIP",
+          "type" : "application/x-binary",
+          "title" : "Download"
+        } ],
+        "previews" : [ {
+          "href" : "http://landsat-ds.eo.esa.int/metadata/LANDSAT_ETM/2000/01/27/LS07_RKSE_ETM_GTC_1P_20000127T072559_20000127T072628_004175_0169_0021_0FF3.BP.PNG",
+          "type" : "image/png",
+          "title" : "Quicklook"
+        } ],
+        "up" : [ {
+          "href" : "http://geo.spacebel.be/opensearch/request/?httpAccept=application/atom%2Bxml&uid=LANDSAT.ETM.GTC&recordSchema=iso",
+          "type" : "application/atom+xml",
+          "title" : "Up"
+        } ]
+      },
+      "acquisitionInformation" : [ {
+        "platform" : {
+          "platformShortName" : "Landsat",
+          "platformSerialIdentifier" : "7"
+        },
+        "instrument" : {
+          "instrumentShortName" : "ETM",
+          "sensorType" : "OPTICAL",
+          "operationalMode" : "IM"
+        },
+        "acquisitionParameters" : {
+          "beginningDateTime" : "2000-01-27T07:25:59Z",
+          "endingDateTime" : "2000-01-27T07:26:28Z",
+          "orbitDirection" : "DESCENDING",
+          "orbitNumber" : 4175,
+          "acquisitionType" : "NOMINAL",
+          "acquisitionSubType" : "DEFAULT",
+          "wrsLongitudeGrid" : "169",
+          "wrsLatitudeGrid" : "21"
+        }
+      } ],
+      "productInformation" : {
+        "productType" : "ETM_GTC_1P",
+        "size" : 253335462,
+        "availabilityTime" : "2000-01-27T07:26:28Z",
+        "referenceSystemIdentifier" : "epsg:4326",
+        "processingMode" : "NOMINAL",
+        "cloudCover" : 1,
+        "qualityInformation" : {
+          "qualityDegradation" : 0
+        }
+      }
+    }
+  } ]
+}

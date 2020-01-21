@@ -1,0 +1,71 @@
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              11.26,
+              43.32
+            ],
+            [
+              11.01,
+              42.43
+            ],
+            [
+              12.31,
+              42.22
+            ],
+            [
+              12.57,
+              43.11
+            ],
+            [
+              11.26,
+              43.32
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": "ASA_IMS_1PNESA20081126_093009_000000152074_00122_35246_0000",
+      "properties": {
+        "date": "2008-11-26T09:30:09.200Z/2008-11-26T09:30:24.289Z",
+        "title": "ASA_IMS_1PNESA20081126_093009_000000152074_00122_35246_0000",
+        "earthObservation": {
+          "status": "ARCHIVED",
+          "parentIdentifier": "oads_Envisat_ASAR_IM",
+          "productInformation": {
+            "productType": "ASA_IMS_1P"
+          },
+          "acquisitionInformation": [
+            {
+              "acquisitionParameter": {
+                "acquisitionStartTime": "2008-11-26T09:30:09.200Z",
+                "acquisitionStopTime": "2008-11-26T09:30:24.289Z",
+                "orbitNumber": 35246,
+                "orbitDirection": "DESCENDING",
+                "relativePassNumber": 122
+              },
+              "sensor": {
+                "instrument": "ASAR",
+                "operationalMode": "IM",
+                "polarisationMode": "S",
+                "polarisationChannels": "VV"
+              },
+              "platform": {
+                "platformShortName": "Envisat",
+                "platformSerialIdentifier": null
+              }
+            }
+          ]
+        },
+        "links": {
+          "data": [
+            {
+              "href": "https://esar-ds.eo.esa.int/oads/data/ASA_IMS_1P/ASA_IMS_1PNESA20081126_093009_000000152074_00122_35246_0000.N1"
+            }
+          ]
+        },
+        "updated": "2008-11-26T09:30:24.289Z"
+      },
+      "type": "Feature"
+    }

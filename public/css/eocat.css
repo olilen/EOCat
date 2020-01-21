@@ -1,0 +1,31 @@
+body {
+    font-family: MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    background-color: rgb(191, 189, 207);
+    color: #3F6F77;
+    padding: 0px;
+    margin: 100px;
+}
+
+.response {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+a:link{
+    color: white;
+}
+
+a[href]{
+    color: #156868;
+    text-decoration: none;
+}
+a:hover {
+    color: rgba(231,74,67,1);
+}
+
+input.break {
+    word-wrap: break-word;
+    word-break: break-word;
+    height: 80px;
+}
