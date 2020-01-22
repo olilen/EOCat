@@ -62,11 +62,26 @@
     </style>
     
     <body>
-        <h1>EO-Cat Admin</h1>
+        <h1>EO-Cat Metadata Harvester</h1>
         <div id="instruction">
-Enter a valid open search URL to find products on ESA's Sentinel DataHub. Format must be "json"
+Enter a valid open search URL to find products on ESA's Sentinel DataHub. Search results must be in "json" format.
 <br/>
 Products found will be ingested in the EOCat database automatically, page after page. Existing entries are updated.
+<br/><br/>
+Product Identifier is the product name (not the DHuS uuid)
+<br/>
+Dataset is a string built as follow: "dhus_platformName_platformSerialIdentifier_productType"
+<br/>
+e.g:
+<br/>
+    "dhus_Sentinel-1_A_SLC"
+    <br/>
+    "dhus_Sentinel-2_B_S2MSI1C"
+    <br/>
+    "dhus_Sentinel-3_A_SL_1_RBT___"
+<br/><br/><br/>
+WARNING!! Do not close the page while the harvester is running unless you want to abort it.
+<br/><br/><br/>
         </div>
         <p>&nbsp;</p><p>&nbsp;</p>
         

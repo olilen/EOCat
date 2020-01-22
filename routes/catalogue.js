@@ -95,7 +95,7 @@ var productSchema = mongoose.Schema({
 	    				instrument: {$type: String},
 	    				operationalMode: {$type: String},
 	    				polarisationMode: {$type: String},
-	            polarisationChannels: {$type: String}
+	            		polarisationChannels: {$type: String}
 	    			},
 	    			acquisitionParameter: {
 	    				acquisitionStartTime: { $type: Date, index: true},
@@ -110,7 +110,8 @@ var productSchema = mongoose.Schema({
 	    		productInformation: {
 	    			productType: {$type: String},
 	    			timeliness: {$type: String},
-						size: { $type: Number}
+					size: { $type: Number},
+					cloudCoveragePercentage: { $type: Number}
 	    		}
 	    	}
 

@@ -277,11 +277,13 @@ exports.mapFromHubOpenSearch = function(item,dataset,model) {
 		if(item.double) Object.assign(hubItem,reshuffle(item.double));
 		if(item.str) Object.assign(hubItem,reshuffle(item.str));
 
+		// In dhus, platform serial identifiers attribute (A/B/C) are not consistent. Will get it from the 3rd character of the product identifier, 
+
 		if(!dataset) {
 			dataset = "dhus_"
-				+ hubItem.platformserialidentifier
-				+ "_" + hubItem.instrumentshortname
-				+ "_" + hubItem.sensoroperationalmode;
+				+ hubItem.platformname
+				+ "_" + hubItem.identifier[2]
+				+ "_" + hubItem.producttype;
 			}
 
 		var sizeArray = hubItem.size.split(" ");
@@ -303,7 +305,7 @@ exports.mapFromHubOpenSearch = function(item,dataset,model) {
 		
 
 		var newItem = {
-			id: item.title,
+			id: hubItem.identifier,
 			geometry: wkt(hubItem.footprint),
 			type: "Feature",
 			properties: {
@@ -321,11 +323,12 @@ exports.mapFromHubOpenSearch = function(item,dataset,model) {
 					acquisitionInformation: [{
 						platform: {
 							platformShortName: hubItem.platformname,
-							platformSerialIdentifier: hubItem.platformserialidentifier
+							platformSerialIdentifier: hubItem.identifier[2]
 						},
 						sensor: {
 							instrument: hubItem.instrumentshortname,
-							operationalMode: hubItem.sensoroperationalmode
+							operationalMode: hubItem.sensoroperationalmode,
+							polarisationMode: hubItem.polarisationmode
 						},
 						acquisitionParameter: {
 							acquisitionStartTime: new Date(hubItem.beginposition),
@@ -341,13 +344,14 @@ exports.mapFromHubOpenSearch = function(item,dataset,model) {
 					productInformation: {
 						productType: hubItem.producttype,
 						//timeliness: indexes["product"]["Timeliness Category"],
-						size: sizeInBytes
+						size: sizeInBytes,
+						cloudCoveragePercentage: hubItem.cloudcoverpercentage
 					}
 				}
 			}
 		};
 
-		console.log("item: "+JSON.stringify(newItem));
+		// console.log("item: "+JSON.stringify(newItem));
 
 		try {
 			var testi = new model(newItem);
