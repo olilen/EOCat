@@ -105,8 +105,13 @@ rm -R ../eocatdata
 ```
 
 To populate the database with Sentinel metadata from ESA's Datahub, use the Harvester utility:
+> Note: The eocat server must be started in __https__
+
+Go through step 6 and start server with `./eocat -s -S -p 3443`
+
+Use the harvester:
 ```
-http://localhost:3000/harvester.html
+https://localhost:3443/harvester.html
 ```
 
 
