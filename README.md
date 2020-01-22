@@ -12,7 +12,7 @@ Web Site: https://obarois.github.io/EOCat-v1/
 Refer to https://www.mongodb.com fot installing Mongodb on other platform and skip step 2 and 3
 
 
-1. Install node :
+__1. Install node :__
 ```
 https://nodejs.org
 ```
@@ -27,7 +27,7 @@ https://nodejs.org
 brew install mongodb
 ```
 
-4. change dir to the root directory of EOCat (where this INSTALL file is located)
+4. change dir to the root directory of EOCat
 ```
 cd <eocat dir>
 ```
