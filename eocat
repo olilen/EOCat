@@ -4,17 +4,19 @@ usage()
 {
 cat << EOF
 usage: ./eocat  [-s][-p port][-S]
-                [-e|-r]
+                [-e]
+                [-h]
+                [-c]
 
 This script starts or stops the EOCat server and the underlying mongodb database.
 
 OPTIONS:
-   -h      Show this message
-   -c      Check status of EOcat server and mongod processes
    -s      Start the EOCat server and mongodb
    -p port Set port number the EOCat server will listen too (default 3000)
    -S      Use https protocol (default http)
    -e      Stop the EOCat server and mongodb
+   -h      Show this message
+   -c      Check status of EOcat server and mongod processes
 EOF
 }
 
@@ -47,7 +49,6 @@ while getopts 'hcsp:Sre' flag; do
     s)
       oper='Start'
       ;;
-    r) oper='Restart' ;;
     p) port="${OPTARG}";;
     e) oper='Stop' ;;
     c) oper='Status' ;;
