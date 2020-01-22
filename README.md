@@ -12,38 +12,40 @@ Web Site: https://obarois.github.io/EOCat-v1/
 Refer to https://www.mongodb.com fot installing Mongodb on other platform and skip step 2 and 3
 
 
-__1. Install node :__
+__1. Install Node :__
 ```
 https://nodejs.org
 ```
 
-2. install homebrew package manager:
+__2. install homebrew package manager:__
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-3. install mongodb:
+__3. install mongodb:__
 ```
 brew install mongodb
 ```
 
-4. change dir to the root directory of EOCat
+__4. change dir to the root directory of EOCat__
 ```
 cd <eocat dir>
 ```
 
-5. install all node module dependencies required by EOCat (this creates a dir ./node_modules)
+__5. install all node module dependencies required by EOCat (this creates a dir ./node_modules)__
 ```
 npm install
 ```
 
-6. generate server key and certificate (needed if using https)
+__6. generate server key and certificate (needed if using https)__
 ```
 ./utilities/generate_ssl_keycert.sh
 ```
 
+>You should now be OK to go... 
 
-7. You should now be OK to go... <br>
+
+__7. Start the EOCat Server__
 
 Use the provided eocat script to start the EOCat server. To see options, use `./eocat`<br>
 
@@ -65,7 +67,7 @@ The script first starts the mongodb database (on port 27017), then the EOCat Web
 Should it not find them, the eocat script creates the folders __../eocatdata/mongodb__ (mongodb database) and __../eocatdata/log__ (mongodb log file).
 
 
-8. Try it out
+__8. Try it out__
 
 >Assuming EOCat was started with command __./eocat -s__
 
@@ -89,8 +91,10 @@ Get the catalogue population (experimental):
 ```
 http://localhost:3000/describe
 ```
+>See how it goes by customizing the test data file  __./test-data/testProduct.json__ or using your own.
 
-9. Clean things up
+
+__9. Clean things up:__
 
 To clean things up after trying out:
 
@@ -104,6 +108,7 @@ Delete the entire Mongodb database:
 rm -R ../eocatdata
 ```
 
+__10. Make a real use of EOCat:__
 To populate the database with Sentinel metadata from ESA's Datahub, use the Harvester utility:
 > Note: The eocat server must be started in __https__
 
