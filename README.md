@@ -61,9 +61,9 @@ To start an EOCat server listening to http on port 3000:
 ```
 ./eocat -s
 ```
-<br>
-The script first starts the mongodb database (on port 27017), then the EOCat Web server, and finally opens the EOCat home page in your default Browser application.
 
+
+>The script first starts the mongodb database (on port 27017), then the EOCat Web server, and finally opens the EOCat home page in your default Browser application.
 Should it not find them, the eocat script creates the folders __../eocatdata/mongodb__ (mongodb database) and __../eocatdata/log__ (mongodb log file).
 
 
