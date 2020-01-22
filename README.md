@@ -40,12 +40,12 @@ To start an EOCat server listening to http on port 3000: <br>
   > ./eocat -s
 <br>
 The script first starts the mongodb database (on port 27017), then the EOCat Web server, and finally opens the EOCat home page in your default Browser application.<br>
-Should it not find them, the eocat script creates the folders ../eocatdata/mongodb (mongodb database) and ../eocatdata/log (mongodb log file).<br>
+Should it not find them, the eocat script creates the folders **../eocatdata/mongodb** (mongodb database) and **../eocatdata/log** (mongodb log file).<br><br><br>
 
 To see eocat options:<br>
 >./eocat<br>
 
-8. Try it out
+8. Try it out<br>
 *Assuming EOCat was started with command __./eocat -s__*
 
 Populate the catalogue with 1 test product:
@@ -64,6 +64,7 @@ Get the catalogue population (experimental):
 To clean things up after testing:<br>
 Stop the server and MongoDB database
 > ./eocat -e
+
 Delete database
 > rm -R ../eocatdata
 <br/>
