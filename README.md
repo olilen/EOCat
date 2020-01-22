@@ -30,11 +30,13 @@ Set-up on macos (tested on v10.11+)
 
 7. You should now be OK to go... Use the provided eocat script to start the EOCat server.<br>
 
-Start an EOCat server listening to https on port 3443: <br>
+To start an EOCat server listening to https on port 3443: <br>
   > ./eocat -s -S -p 3443
-Start an EOCat server listening to http on port 8080: <br>
+
+To start an EOCat server listening to http on port 8080: <br>
   > ./eocat -s  -p 8080
-Start an EOCat server listening to http on port 3000: <br>
+
+To start an EOCat server listening to http on port 3000: <br>
   > ./eocat -s
 <br>
 The script first starts the mongodb database (on port 27017), then the EOCat Web server, and finally opens the EOCat home page in your default Browser application.<br>
