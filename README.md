@@ -28,26 +28,20 @@ Set-up on macos (tested on v10.11+)
 > ./utilities/generate_ssl_keycert.sh
 
 
-7- You should now be OK to go... Use the provided eocat script to start the EOCat server:<br>
-Usage: ./eocat  OPTIONS<br>
-OPTIONS:<br>
-   -s      Start the EOCat server and mongodb<br>
-   -p port Set port number the catalogue server will listen too (default 3000)<br>
-   -S      use https protocol (default http)<br>
-   -e      Stop the EOCat server and mongodb<br>
-   -h      Show this message<br>
-   -c      Check status of EOcat server and mongod processes<br>
+7- You should now be OK to go... Use the provided eocat script to start the EOCat server.<br>
+
+Start an EOCat server listening to https on port 3443: <br>
+  > ./eocat -s -S -p 3443<br>
+Start an EOCat server listening to http on port 8080: <br>
+  > ./eocat -s  -p 8080<br>
+Start an EOCat server listening to http on port 3000: <br>
+  > ./eocat -s<br><br>
 <br>
+The script first starts the mongodb database (on port 27017), then the EOCat Web server, and finally opens the EOCat home page in your default Browser application.<br>
 Should it not find them, the eocat script creates the folders ../eocatdata/mongodb (mongodb database) and ../eocatdata/log (mongodb log file).<br>
-The script first starts the mongodb database (on port 27017), then the EOCat server, and finally opens the EOCat server home page in your default Browser application.<br>
 
-
-
-Examples:
-  - Start an EOCat server listening to https on port 3443: > ./eocat -s -S -p 3443
-  - Start an EOCat server listening to http on port 8080: > ./eocat -s  -p 8080
-  - Start an EOCat server listening to http on port 3000: > ./eocat -s
-
+To see eocat options:<br>
+>./eocat<br>
 
 8- Testing
 Assuming EOCat was started with command ./eocat -s
@@ -55,17 +49,20 @@ Assuming EOCat was started with command ./eocat -s
 Populate the catalogue with 1 test product:
 > curl -H "Content-Type: application/json" --data @./test-data/testProduct.json http://localhost:3000/products?dataset=test%20Dataset
 
-Find it (use a web browser):
-http://localhost:3000/*/search
-http://localhost:3000/testDataset/search
+Find it (use a web browser):<br>
+http://localhost:3000/*/search<br>
+http://localhost:3000/testDataset/search<br>
 
-Get product by its id:
-http://localhost:3000/products/test%20product%201
+Get product by its id:<br>
+http://localhost:3000/products/test%20product%201<br>
+
+Get the catalogue population (experimental):<br>
+http://localhost:3000/describe<br>
 
 To clean things up after testing:
-> ./eocat -e
+> ./eocat -e<br/>
 > rm -R ../eocatdata
-
-To populate the database with more data, use the Harvester utility (link on top of the server home page)
+<br/>
+To populate the database with Sentinel metadata from ESA's Datahub, use the Harvester utility (link on top of the server home page)
 
 
