@@ -13,7 +13,7 @@
     "htmlparser2": "^3.9.2",
     "http": "0.0.0",
     "https": "^1.0.0",
-    "mongoose": "^4.6.1",
+    "mongoose": "^5.7.5",
     "mongoose-geojson-schema": "^2.1.2",
     "mongoose-paginate": "^5.0.3",
     "request": "^2.75.0",
